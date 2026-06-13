@@ -1,0 +1,355 @@
+@import url('https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Satoshi:wght@400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand: #D4A017;
+  --brand2: #C8920F;
+  --brand3: #F0C040;
+  --brand-light: #FDF6DC;
+  --dark: #111111;
+  --dark2: #1E1E1E;
+  --surface: #F5F5F5;
+  --surface2: #EBEBEB;
+  --text: #111111;
+  --text2: #333333;
+  --text3: #6B6B6B;
+  --border: #E8E8E8;
+  --border2: #D0D0D0;
+  --green: #10B981;
+  --red: #EF4444;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --radius-lg: 20px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, .06), 0 4px 16px rgba(0, 0, 0, .05);
+  --shadow-lg: 0 8px 32px rgba(212, 160, 23, .2), 0 2px 8px rgba(0, 0, 0, .08);
+  --shadow-gold: 0 4px 20px rgba(212, 160, 23, .35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'Satoshi', sans-serif;
+  background: #fff;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 99px;
+}
+
+/* Page animation */
+.page-enter {
+  animation: pageSlideIn .38s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide animations */
+.slide-in {
+  opacity: 0;
+  transform: translateY(44px);
+  transition: opacity .6s cubic-bezier(.22, 1, .36, 1), transform .6s cubic-bezier(.22, 1, .36, 1);
+}
+
+.slide-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Course card hover */
+.course-card {
+  transition: transform .3s cubic-bezier(.22, 1, .36, 1), box-shadow .3s;
+}
+
+.course-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 16px 40px rgba(212, 160, 23, .2);
+}
+
+.course-card:hover .course-thumb {
+  transform: scale(1.05);
+}
+
+.course-thumb {
+  transition: transform .4s;
+}
+
+/* Stat card hover */
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(212, 160, 23, .15);
+}
+
+/* Feature card */
+.feature-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(212, 160, 23, .4) !important;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+/* Sidebar item */
+.sidebar-item {
+  transition: all .2s;
+}
+
+.sidebar-item:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, .07) !important;
+}
+
+/* Notification panel */
+#notif-panel {
+  transition: right .35s cubic-bezier(.22, 1, .36, 1);
+}
+
+/* Filter pills */
+.filter-pill {
+  transition: all .2s;
+}
+
+.filter-pill:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+  background: var(--brand-light);
+}
+
+/* Hero */
+.hero {
+  overflow: hidden;
+}
+
+/* Hero radial glows */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 160, 23, .08) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -200px;
+  left: -100px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 160, 23, .05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Progress bar */
+.progress-fill {
+  background: linear-gradient(90deg, var(--brand), #C8920F);
+}
+
+/* Auth left glow */
+.auth-left::before {
+  content: '';
+  position: absolute;
+  top: -150px;
+  right: -150px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 160, 23, .1) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* Table row hover */
+tr:hover td {
+  background: #FDFBF3;
+}
+
+/* Plan card */
+.plan-card {
+  transition: all .25s;
+}
+
+/* Pulse */
+@keyframes pulse-ring {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+}
+
+.pulse {
+  animation: pulse-ring 2s infinite;
+}
+
+/* Testimonial */
+.testimonial:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(212, 160, 23, .15);
+  border-color: rgba(212, 160, 23, .3) !important;
+}
+
+/* Mobile sidebar overlay */
+.sidebar-overlay {
+  backdrop-filter: blur(2px);
+}
+
+/* Range input */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--brand) 0%, var(--surface2) 0%);
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--brand);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(212, 160, 23, .4);
+}
+
+/* Chart bars */
+.chart-bar:hover {
+  filter: brightness(1.15);
+  transform: scaleY(1.04);
+  transform-origin: bottom;
+}
+
+/* Course builder */
+.cb-editor:empty::before {
+  content: attr(data-placeholder);
+  color: var(--text3);
+  pointer-events: none;
+}
+
+/* YT embed */
+.yt-embed-wrap {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+.yt-embed-wrap iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Lesson player sidebar */
+.lesson-item {
+  transition: background .15s;
+}
+
+.lesson-item:hover {
+  background: rgba(212, 160, 23, .08);
+}
+
+.lesson-item.active {
+  background: rgba(212, 160, 23, .12);
+  border-left: 3px solid var(--brand);
+}
+
+@media (max-width: 768px) {
+  .auth-left {
+    display: none;
+  }
+
+  .auth-right {
+    width: 100% !important;
+    min-width: unset !important;
+  }
+
+  .hero {
+    padding: 90px 20px 40px;
+  }
+
+  .section {
+    padding: 50px 20px;
+  }
+
+  .home-nav {
+    padding: 12px 16px;
+  }
+
+  .home-nav-links {
+    display: none;
+  }
+
+  .dash-content {
+    padding: 16px;
+  }
+
+  .dash-topbar {
+    padding: 10px 16px;
+  }
+}
+
+/* Headline slide animations */
+@keyframes slideLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
