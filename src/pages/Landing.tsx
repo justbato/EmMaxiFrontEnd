@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
-import { Btn, StarRating } from '../components/ui'
+import { StarRating } from '../components/ui'
 import { DEMO_COURSES } from '../types'
 import { CourseCard } from '../components/CourseCard'
 
