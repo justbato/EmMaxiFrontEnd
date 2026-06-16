@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Btn, StarRating } from '../components/ui'
 import { DEMO_COURSES } from '../types'
 import { CourseCard } from '../components/CourseCard'
@@ -47,7 +47,7 @@ export function LandingPage() {
             <span className="w-1.5 h-1.5 rounded-full bg-brand pulse" /> Africa's fastest-growing learning platform
           </div>
 
-          <h1 
+          <h1
             className="text-[clamp(42px,5vw,72px)] font-[700] leading-[1.05] text-dark mb-6 slide-in"
             style={{ fontFamily: 'Clash Display, sans-serif', transitionDelay: '.1s' }}
           >
@@ -58,16 +58,16 @@ export function LandingPage() {
           <p className="text-[18px] text-text2 max-w-[540px] mb-10 leading-[1.6] slide-in" style={{ transitionDelay: '.2s' }}>
             Join over 24,000 students and instructors building their future on EmMaxi. The all-in-one platform for creating and mastering world-class courses.
           </p>
-          
+
           <div className="flex gap-4 items-center flex-wrap slide-in" style={{ transitionDelay: '.3s' }}>
             <Btn size="lg" onClick={() => navigate('/signup')} className="text-[16px] px-8 py-3.5 shadow-gold hover:shadow-gold-lg">Start learning free</Btn>
             <Btn variant="outline" size="lg" onClick={() => navigate('/courses')} className="text-[16px] px-8 py-3.5 border-border2 hover:border-brand">Browse courses</Btn>
           </div>
-          
+
           <div className="flex items-center gap-6 mt-12 pt-8 border-t border-border slide-in" style={{ transitionDelay: '.4s' }}>
             <div className="flex -space-x-3">
-              {['AO','JO','LM'].map((i, idx) => (
-                <div key={i} className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center text-[12px] font-bold text-white shadow-sm" style={{ background: ['#D4A017','#10B981','#6366F1'][idx], zIndex: 3-idx }}>{i}</div>
+              {['AO', 'JO', 'LM'].map((i, idx) => (
+                <div key={i} className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center text-[12px] font-bold text-white shadow-sm" style={{ background: ['#D4A017', '#10B981', '#6366F1'][idx], zIndex: 3 - idx }}>{i}</div>
               ))}
             </div>
             <div>
@@ -78,14 +78,14 @@ export function LandingPage() {
             </div>
           </div>
         </div>
-        
+
         <div className="flex-1 relative z-10 w-full slide-in" style={{ transitionDelay: '.5s' }}>
           <div className="relative rounded-[24px] bg-white border border-border shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden animate-float">
             <div className="absolute inset-0 bg-gradient-to-tr from-brand/5 to-transparent opacity-50"></div>
             {/* Embedded mockup image */}
             <img src="/hero_dashboard_light_mockup_1781550300720.png" alt="Platform Dashboard Mockup" className="w-full h-auto object-cover opacity-95 block relative z-10 mix-blend-multiply" />
           </div>
-          
+
           {/* Decorative floating elements */}
           <div className="absolute -bottom-8 -left-8 bg-white border border-border rounded-[16px] p-4 shadow-lg flex items-center gap-4 animate-float" style={{ animationDelay: '1s', zIndex: 20 }}>
             <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-[18px]">📈</div>
@@ -119,7 +119,7 @@ export function LandingPage() {
           <h2 className="text-[clamp(32px,4vw,48px)] font-[700] text-dark slide-in" style={{ fontFamily: 'Clash Display, sans-serif', letterSpacing: '-0.02em' }}>Everything you need to succeed.</h2>
           <p className="text-text2 text-[16px] mt-4 max-w-2xl mx-auto leading-[1.6] slide-in" style={{ transitionDelay: '.1s' }}>Whether you're building a massive audience or mastering a new skill, we provide the tools to make it happen flawlessly.</p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Large Feature 1 */}
           <div className="md:col-span-2 feature-card bg-surface border border-border rounded-[24px] p-8 md:p-10 relative overflow-hidden group slide-in">
@@ -129,7 +129,7 @@ export function LandingPage() {
               <p className="text-[15px] text-text2 leading-[1.6]">Embed any YouTube video as a lesson. No encoding waits, no storage limits. Students watch right in-app with progress tracking.</p>
             </div>
             <div className="absolute -right-10 -bottom-10 w-[300px] h-[200px] bg-white rounded-tl-[24px] border-l border-t border-border shadow-2xl p-4 transition-transform group-hover:-translate-y-2 group-hover:-translate-x-2">
-               <div className="w-full h-full bg-surface2 rounded-[12px] flex items-center justify-center text-text3 text-[12px] font-medium border border-border">Video Player Mockup</div>
+              <div className="w-full h-full bg-surface2 rounded-[12px] flex items-center justify-center text-text3 text-[12px] font-medium border border-border">Video Player Mockup</div>
             </div>
           </div>
 
@@ -139,8 +139,8 @@ export function LandingPage() {
             <h3 className="text-[20px] font-[700] mb-3 text-dark font-[Clash_Display,sans-serif]">Verified Certificates</h3>
             <p className="text-[14px] text-text2 leading-[1.6]">Auto-generated certificates with unique IDs for one-click LinkedIn sharing.</p>
             <div className="mt-8 pt-6 border-t border-border/50">
-               <div className="h-2 w-3/4 bg-brand-light rounded-full mb-2"></div>
-               <div className="h-2 w-1/2 bg-surface2 rounded-full"></div>
+              <div className="h-2 w-3/4 bg-brand-light rounded-full mb-2"></div>
+              <div className="h-2 w-1/2 bg-surface2 rounded-full"></div>
             </div>
           </div>
 
@@ -160,16 +160,16 @@ export function LandingPage() {
               <p className="text-[15px] text-white/70 leading-[1.6]">Sell globally, earn locally. Support for localized pricing, automatic currency conversion, and global payment gateways.</p>
             </div>
             <div className="absolute right-0 bottom-0 w-[260px] h-[160px] bg-dark2/50 backdrop-blur-md rounded-tl-[24px] border-l border-t border-white/10 p-5 shadow-2xl">
-                <div className="flex justify-between items-center mb-4">
-                  <div className="text-[12px] font-medium text-white/60">Revenue</div>
-                  <div className="text-[12px] text-green-400">+14%</div>
-                </div>
-                <div className="text-[24px] font-bold font-[Clash_Display,sans-serif] text-white mb-2">$4,250.00</div>
-                <div className="flex items-end gap-1 h-10 mt-4">
-                  {[40,70,45,90,60,100,80].map((h, i) => (
-                    <div key={i} className="flex-1 bg-brand rounded-t-sm opacity-80" style={{ height: `${h}%` }}></div>
-                  ))}
-                </div>
+              <div className="flex justify-between items-center mb-4">
+                <div className="text-[12px] font-medium text-white/60">Revenue</div>
+                <div className="text-[12px] text-green-400">+14%</div>
+              </div>
+              <div className="text-[24px] font-bold font-[Clash_Display,sans-serif] text-white mb-2">$4,250.00</div>
+              <div className="flex items-end gap-1 h-10 mt-4">
+                {[40, 70, 45, 90, 60, 100, 80].map((h, i) => (
+                  <div key={i} className="flex-1 bg-brand rounded-t-sm opacity-80" style={{ height: `${h}%` }}></div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -222,10 +222,10 @@ export function LandingPage() {
         <div className="max-w-[1000px] mx-auto bg-dark rounded-[32px] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl slide-in">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand/30 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
           <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#10B981]/20 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
-          
+
           <div className="relative z-10">
             <h2 className="text-[clamp(36px,5vw,56px)] font-[700] text-white mb-6 leading-[1.1]" style={{ fontFamily: 'Clash Display, sans-serif', letterSpacing: '-0.02em' }}>
-              Ready to elevate <br/> your <span className="text-brand">potential?</span>
+              Ready to elevate <br /> your <span className="text-brand">potential?</span>
             </h2>
             <p className="text-white/70 text-[18px] mb-10 leading-[1.6] max-w-[500px] mx-auto">
               Join the most intuitive platform for creators and learners. Get started in seconds.
