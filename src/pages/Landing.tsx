@@ -22,39 +22,6 @@ export function LandingPage() {
     { name: 'Lena Müller', role: 'Instructor', text: 'My UI/UX course has 940 students and I did not have to handle any platform setup. I just built and launched.', rating: 5, avatar: 'LM', color: '#6366F1' },
   ]
 
-  const features = [
-    {
-      title: 'Verified Certificates',
-      description: 'Auto-generated certificates with unique IDs upon course completion, ready to share on LinkedIn with one click.',
-      wide: false,
-      dark: false,
-    },
-    {
-      title: '80% Revenue Share',
-      description: 'Keep 80% of every sale. Fast monthly payouts directly to your local bank account with full earnings transparency.',
-      wide: false,
-      dark: false,
-    },
-    {
-      title: 'Multi-Currency Engine',
-      description: 'Sell globally, earn locally. Localized pricing, automatic currency conversion, and support for global payment gateways built in.',
-      wide: true,
-      dark: true,
-    },
-    {
-      title: 'Progress Tracking',
-      description: 'Students and instructors get clear dashboards showing completion rates, time spent, and performance metrics at a glance.',
-      wide: false,
-      dark: false,
-    },
-    {
-      title: 'Course Management',
-      description: 'Build structured courses with sections, lessons, and quizzes. Publish when ready and update anytime without disrupting learners.',
-      wide: false,
-      dark: false,
-    },
-  ]
-
   return (
     <div className="min-h-screen bg-white text-text overflow-hidden">
 
