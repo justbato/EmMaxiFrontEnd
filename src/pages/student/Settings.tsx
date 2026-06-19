@@ -42,10 +42,10 @@ export function StudentSettings() {
   return (
     <DashLayout sidebarItems={NAV} title="Settings" subtitle="Manage your profile and preferences">
       {/* Tab pills */}
-      <div className="flex gap-2 flex-wrap mb-6 bg-white border border-[#E8E8E8] rounded-full p-1.5 w-fit">
+      <div className="flex gap-2 flex-wrap mb-6 bg-[var(--surface)] transition-colors border border-[var(--border)] rounded-full p-1.5 w-fit">
         {TABS.map(t => (
           <button key={t} onClick={() => setTab(t)}
-            className={`px-4 py-1.5 rounded-full text-[12px] font-[600] transition-all ${tab === t ? 'bg-[#D4A017] text-[#111]' : 'text-[#6B6B6B] hover:text-[#111]'}`}>
+            className={`px-4 py-1.5 rounded-full text-[12px] font-[600] transition-all ${tab === t ? 'bg-[#D4A017] text-[var(--text-primary)]' : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'}`}>
             {t}
           </button>
         ))}
@@ -56,39 +56,39 @@ export function StudentSettings() {
           <h2 className="text-[15px] font-[700] mb-5">Profile information</h2>
           {/* Avatar */}
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-16 rounded-full bg-[#D4A017] flex items-center justify-center text-[#111] text-[22px] font-[700]">
+            <div className="w-16 h-16 rounded-full bg-[#D4A017] flex items-center justify-center text-[var(--text-primary)] text-[22px] font-[700]">
               {user?.full_name?.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase()}
             </div>
             <div>
               <Btn variant="outline" size="sm">Change photo</Btn>
-              <p className="text-[10px] text-[#6B6B6B] mt-1">JPG, PNG up to 5MB</p>
+              <p className="text-[10px] text-[var(--text-tertiary)] mt-1">JPG, PNG up to 5MB</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-[12px] font-[600] text-[#333] mb-1">First name</label>
-              <input value={fname} onChange={e => setFname(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
+              <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">First name</label>
+              <input value={fname} onChange={e => setFname(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
             </div>
             <div>
-              <label className="block text-[12px] font-[600] text-[#333] mb-1">Last name</label>
-              <input value={lname} onChange={e => setLname(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
+              <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Last name</label>
+              <input value={lname} onChange={e => setLname(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
             </div>
           </div>
           <div className="mb-4">
-            <label className="block text-[12px] font-[600] text-[#333] mb-1">Username</label>
+            <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Username</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B6B] text-[13px]">@</span>
-              <input defaultValue={user?.username} className="w-full pl-7 pr-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] text-[13px]">@</span>
+              <input defaultValue={user?.username} className="w-full pl-7 pr-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
             </div>
           </div>
           <div className="mb-4">
-            <label className="block text-[12px] font-[600] text-[#333] mb-1">Email</label>
-            <input defaultValue={user?.email} className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none bg-[#F9F9F9] text-[#6B6B6B]" disabled />
+            <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Email</label>
+            <input defaultValue={user?.email} className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none bg-[var(--bg-tertiary)] transition-colors text-[var(--text-tertiary)]" disabled />
           </div>
           <div className="mb-5">
-            <label className="block text-[12px] font-[600] text-[#333] mb-1">Bio</label>
+            <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Bio</label>
             <textarea rows={3} value={bio} onChange={e => setBio(e.target.value)} placeholder="Tell instructors a bit about yourself…"
-              className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] resize-y transition-colors" />
+              className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] resize-y transition-colors" />
           </div>
           <Btn onClick={saveProfile}>Save changes</Btn>
         </Card>
@@ -102,9 +102,9 @@ export function StudentSettings() {
             const setters = [setCurrentPass, setNewPass, setConfirmPass]
             return (
               <div key={label} className="mb-4">
-                <label className="block text-[12px] font-[600] text-[#333] mb-1">{label}</label>
+                <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">{label}</label>
                 <input type="password" value={vals[i]} onChange={e => { setters[i](e.target.value); setPassErr('') }}
-                  className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
+                  className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
               </div>
             )
           })}
@@ -123,14 +123,14 @@ export function StudentSettings() {
             { label: 'New course recommendations', desc: 'Personalized course picks', checked: true },
             { label: 'Promotional emails', desc: 'Deals, new courses, platform news', checked: false },
           ].map((item, i) => (
-            <div key={i} className="flex items-center justify-between py-3.5 border-b border-[#E8E8E8] last:border-0">
+            <div key={i} className="flex items-center justify-between py-3.5 border-b border-[var(--border)] last:border-0">
               <div>
-                <div className="text-[13px] font-[500] text-[#111]">{item.label}</div>
-                <div className="text-[11px] text-[#6B6B6B] mt-0.5">{item.desc}</div>
+                <div className="text-[13px] font-[500] text-[var(--text-primary)]">{item.label}</div>
+                <div className="text-[11px] text-[var(--text-tertiary)] mt-0.5">{item.desc}</div>
               </div>
               <label className="relative inline-block w-10 h-5">
                 <input type="checkbox" defaultChecked={item.checked} className="opacity-0 w-0 h-0 peer" />
-                <span className="absolute inset-0 bg-[#D0D0D0] rounded-full cursor-pointer transition-all peer-checked:bg-[#D4A017] before:content-[''] before:absolute before:w-4 before:h-4 before:bg-white before:rounded-full before:top-0.5 before:left-0.5 before:transition-all peer-checked:before:translate-x-5" />
+                <span className="absolute inset-0 bg-[#D0D0D0] rounded-full cursor-pointer transition-all peer-checked:bg-[#D4A017] before:content-[''] before:absolute before:w-4 before:h-4 before:bg-[var(--surface)] transition-colors before:rounded-full before:top-0.5 before:left-0.5 before:transition-all peer-checked:before:translate-x-5" />
               </label>
             </div>
           ))}
@@ -141,7 +141,7 @@ export function StudentSettings() {
       {tab === 'Billing' && (
         <Card className="p-6 max-w-xl">
           <h2 className="text-[15px] font-[700] mb-5">Billing & payments</h2>
-          <div className="bg-[#FDF6DC] border border-[rgba(212,160,23,.2)] rounded-[12px] p-4 mb-5">
+          <div className="bg-[#FDF6DC] dark:bg-[rgba(212,160,23,.12)] border border-[var(--border)] dark:border-[rgba(212,160,23,.2)] rounded-[12px] p-4 mb-5">
             <div className="text-[13px] font-[600] text-[#7A5A00] mb-1">Free plan</div>
             <div className="text-[12px] text-[#7A5A00]">You're on the free tier. Upgrade to access exclusive courses and features.</div>
           </div>
@@ -150,10 +150,10 @@ export function StudentSettings() {
               { name: 'Pro', price: '₦2,499/mo', features: ['Unlimited courses', 'Download certificates', 'Priority support', 'Offline access'], highlight: true },
               { name: 'Annual', price: '₦19,999/yr', features: ['Everything in Pro', '2 months free', 'Early access to new courses', 'Exclusive workshops'], highlight: false },
             ].map(plan => (
-              <div key={plan.name} className={`border-[2px] rounded-[14px] p-5 cursor-pointer transition-all ${plan.highlight ? 'border-[#D4A017] bg-[#FDF6DC]' : 'border-[#D0D0D0] hover:border-[#D4A017]'}`}>
+              <div key={plan.name} className={`border-[2px] rounded-[14px] p-5 cursor-pointer transition-all ${plan.highlight ? 'border-[#D4A017] bg-[#FDF6DC] dark:bg-[rgba(212,160,23,.12)]' : 'border-[var(--border-2)] hover:border-[#D4A017]'}`}>
                 <div className="text-[14px] font-[700] mb-1">{plan.name}</div>
                 <div className="text-[20px] font-[700] text-[#D4A017] mb-3">{plan.price}</div>
-                {plan.features.map(f => <div key={f} className="text-[12px] text-[#333] flex items-center gap-1.5 mb-1.5"><span className="text-[#10B981]">✓</span>{f}</div>)}
+                {plan.features.map(f => <div key={f} className="text-[12px] text-[var(--text-secondary)] flex items-center gap-1.5 mb-1.5"><span className="text-[#10B981]">✓</span>{f}</div>)}
                 <Btn size="sm" className="w-full justify-center mt-3" variant={plan.highlight ? 'primary' : 'outline'}>Upgrade →</Btn>
               </div>
             ))}

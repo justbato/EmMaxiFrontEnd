@@ -30,10 +30,10 @@ export function InstructorSettings() {
   return (
     <DashLayout sidebarItems={NAV} title="Settings" subtitle="Manage your instructor profile and payouts">
       {/* Tab pills */}
-      <div className="flex gap-2 flex-wrap mb-6 bg-white border border-[#E8E8E8] rounded-full p-1.5 w-fit">
+      <div className="flex gap-2 flex-wrap mb-6 bg-[var(--surface)] transition-colors border border-[var(--border)] rounded-full p-1.5 w-fit">
         {TABS.map(t => (
           <button key={t} onClick={() => setTab(t)}
-            className={`px-4 py-1.5 rounded-full text-[12px] font-[600] transition-all ${tab === t ? 'bg-[#D4A017] text-[#111]' : 'text-[#6B6B6B] hover:text-[#111]'}`}>
+            className={`px-4 py-1.5 rounded-full text-[12px] font-[600] transition-all ${tab === t ? 'bg-[#D4A017] text-[var(--text-primary)]' : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'}`}>
             {t}
           </button>
         ))}
@@ -43,33 +43,33 @@ export function InstructorSettings() {
         <Card className="p-6 max-w-xl">
           <h2 className="text-[15px] font-[700] mb-5">Instructor profile</h2>
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-16 rounded-full bg-[#D4A017] flex items-center justify-center text-[#111] text-[22px] font-[700]">
+            <div className="w-16 h-16 rounded-full bg-[#D4A017] flex items-center justify-center text-[var(--text-primary)] text-[22px] font-[700]">
               {user?.full_name?.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase()}
             </div>
             <div>
               <Btn variant="outline" size="sm">Change photo</Btn>
-              <p className="text-[10px] text-[#6B6B6B] mt-1">Visible to all students</p>
+              <p className="text-[10px] text-[var(--text-tertiary)] mt-1">Visible to all students</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-4">
             {[{ label: 'First name', val: fname, set: setFname }, { label: 'Last name', val: lname, set: setLname }].map(f => (
               <div key={f.label}>
-                <label className="block text-[12px] font-[600] text-[#333] mb-1">{f.label}</label>
-                <input value={f.val} onChange={e => f.set(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
+                <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">{f.label}</label>
+                <input value={f.val} onChange={e => f.set(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
               </div>
             ))}
           </div>
           <div className="mb-4">
-            <label className="block text-[12px] font-[600] text-[#333] mb-1">Professional title</label>
-            <input value={title} onChange={e => setTitle(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
+            <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Professional title</label>
+            <input value={title} onChange={e => setTitle(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
           </div>
           <div className="mb-4">
-            <label className="block text-[12px] font-[600] text-[#333] mb-1">Area of expertise</label>
-            <input value={expertise} onChange={e => setExpertise(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
+            <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Area of expertise</label>
+            <input value={expertise} onChange={e => setExpertise(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
           </div>
           <div className="mb-5">
-            <label className="block text-[12px] font-[600] text-[#333] mb-1">Bio <span className="text-[#6B6B6B] font-normal">(shown on your instructor profile)</span></label>
-            <textarea rows={4} value={bio} onChange={e => setBio(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] resize-y transition-colors" />
+            <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Bio <span className="text-[var(--text-tertiary)] font-normal">(shown on your instructor profile)</span></label>
+            <textarea rows={4} value={bio} onChange={e => setBio(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] resize-y transition-colors" />
           </div>
           <Btn onClick={() => { updateUser({ full_name: `${fname} ${lname}` }); showToast() }}>Save changes</Btn>
         </Card>
@@ -78,35 +78,35 @@ export function InstructorSettings() {
       {tab === 'Payout' && (
         <Card className="p-6 max-w-xl">
           <h2 className="text-[15px] font-[700] mb-2">Payout settings</h2>
-          <div className="bg-[#D1FAE5] border border-[#86EFAC] rounded-[10px] p-4 mb-5">
+          <div className="bg-[#D1FAE5] dark:bg-[rgba(16,185,129,.15)] border border-[#86EFAC] rounded-[10px] p-4 mb-5">
             <div className="text-[13px] font-[600] text-[#065F46]">💰 You earn 80% of every sale</div>
             <div className="text-[11px] text-[#065F46] mt-0.5">Payouts are processed monthly, by the 5th of each month.</div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-[12px] font-[600] text-[#333] mb-1">Pending payout</label>
+              <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Pending payout</label>
               <div className="text-[22px] font-[700] text-[#10B981]">₦72,000</div>
             </div>
             <div>
-              <label className="block text-[12px] font-[600] text-[#333] mb-1">Total earned</label>
+              <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Total earned</label>
               <div className="text-[22px] font-[700]">₦541,200</div>
             </div>
           </div>
           <div className="h-px bg-[#E8E8E8] my-5" />
           <h3 className="text-[13px] font-[700] mb-4">Bank account details</h3>
           <div className="mb-4">
-            <label className="block text-[12px] font-[600] text-[#333] mb-1">Bank name</label>
-            <select value={bankName} onChange={e => setBankName(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] mb-2">
+            <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Bank name</label>
+            <select value={bankName} onChange={e => setBankName(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] mb-2">
               <option value="">Select bank</option>
               {['Access Bank', 'GTBank', 'Zenith Bank', 'First Bank', 'UBA', 'Kuda Bank', 'OPay', 'Moniepoint', 'Other (type manually)'].map(b => <option key={b}>{b}</option>)}
             </select>
             {bankName === 'Other (type manually)' && (
-              <input type="text" value={manualBankName} onChange={e => setManualBankName(e.target.value)} placeholder="Enter bank name" className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
+              <input type="text" value={manualBankName} onChange={e => setManualBankName(e.target.value)} placeholder="Enter bank name" className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-[12px] font-[600] text-[#333] mb-1">Account number</label>
-            <input type="text" maxLength={10} value={accountNo} onChange={e => setAccountNo(e.target.value.replace(/\D/g, ''))} placeholder="0123456789" className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] font-mono transition-colors" />
+            <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Account number</label>
+            <input type="text" maxLength={10} value={accountNo} onChange={e => setAccountNo(e.target.value.replace(/\D/g, ''))} placeholder="0123456789" className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] font-mono transition-colors" />
           </div>
           <Btn onClick={showToast}>Save bank details</Btn>
         </Card>
@@ -117,8 +117,8 @@ export function InstructorSettings() {
           <h2 className="text-[15px] font-[700] mb-5">Change password</h2>
           {['Current password', 'New password', 'Confirm new password'].map(label => (
             <div key={label} className="mb-4">
-              <label className="block text-[12px] font-[600] text-[#333] mb-1">{label}</label>
-              <input type="password" className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
+              <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">{label}</label>
+              <input type="password" className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] transition-colors" />
             </div>
           ))}
           <Btn onClick={showToast}>Update password</Btn>
@@ -135,14 +135,14 @@ export function InstructorSettings() {
             { label: 'Monthly payout processed', desc: 'When your payment is sent', checked: true },
             { label: 'Platform policy updates', desc: 'Important changes to EmMaxi terms', checked: false },
           ].map((item, i) => (
-            <div key={i} className="flex items-center justify-between py-3.5 border-b border-[#E8E8E8] last:border-0">
+            <div key={i} className="flex items-center justify-between py-3.5 border-b border-[var(--border)] last:border-0">
               <div>
-                <div className="text-[13px] font-[500] text-[#111]">{item.label}</div>
-                <div className="text-[11px] text-[#6B6B6B] mt-0.5">{item.desc}</div>
+                <div className="text-[13px] font-[500] text-[var(--text-primary)]">{item.label}</div>
+                <div className="text-[11px] text-[var(--text-tertiary)] mt-0.5">{item.desc}</div>
               </div>
               <label className="relative inline-block w-10 h-5">
                 <input type="checkbox" defaultChecked={item.checked} className="opacity-0 w-0 h-0 peer" />
-                <span className="absolute inset-0 bg-[#D0D0D0] rounded-full cursor-pointer transition-all peer-checked:bg-[#D4A017] before:content-[''] before:absolute before:w-4 before:h-4 before:bg-white before:rounded-full before:top-0.5 before:left-0.5 before:transition-all peer-checked:before:translate-x-5" />
+                <span className="absolute inset-0 bg-[#D0D0D0] rounded-full cursor-pointer transition-all peer-checked:bg-[#D4A017] before:content-[''] before:absolute before:w-4 before:h-4 before:bg-[var(--surface)] transition-colors before:rounded-full before:top-0.5 before:left-0.5 before:transition-all peer-checked:before:translate-x-5" />
               </label>
             </div>
           ))}

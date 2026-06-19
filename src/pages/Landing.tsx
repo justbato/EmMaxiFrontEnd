@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { StarRating } from '../components/ui'
+import { ThemeToggle } from '../components/ui/ThemeToggle'
 import { DEMO_COURSES } from '../types'
 
 type Tab = 'learner' | 'instructor'
@@ -93,7 +94,7 @@ export function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-text" style={{ fontFamily: 'Google Sans, Inter, sans-serif' }}>
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text-primary)]" style={{ fontFamily: 'Google Sans, Inter, sans-serif' }}>
 
       <style>{`
         /* ── Base animation states ── */
@@ -122,34 +123,34 @@ export function LandingPage() {
         .nav-link:hover::after { width:100%; }
 
         /* ── Card hover lift ── */
-        .course-card-g { border: 1.5px solid #e8eaed; border-radius: 12px; padding: 28px; background: #fff; display: flex; flex-direction: column; gap: 10px; transition: box-shadow .25s ease, border-color .25s ease, transform .25s ease; cursor: pointer; }
+        .course-card-g { border: 1.5px solid var(--border); border-radius: 12px; padding: 28px; background: var(--surface); display: flex; flex-direction: column; gap: 10px; transition: box-shadow .25s ease, border-color .25s ease, transform .25s ease, background-color .25s ease; cursor: pointer; }
         .course-card-g:hover { box-shadow: 0 8px 28px rgba(212,160,23,0.13); border-color: #D4A017; transform: translateY(-4px); }
         .course-card-g .label { font-size: 12px; font-weight: 600; color: #D4A017; text-transform: uppercase; letter-spacing: .06em; }
-        .course-card-g h3 { font-size: 18px; font-weight: 700; color: #202124; margin: 0; }
-        .course-card-g p { font-size: 14px; color: #5f6368; line-height: 1.6; margin: 0; flex: 1; }
+        .course-card-g h3 { font-size: 18px; font-weight: 700; color: var(--text-primary); margin: 0; }
+        .course-card-g p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin: 0; flex: 1; }
         .arrow-link { font-size: 14px; font-weight: 600; color: #D4A017; display: flex; align-items: center; gap: 4px; margin-top: 4px; transition: gap .2s; }
         .course-card-g:hover .arrow-link { gap: 8px; }
 
         /* ── Story card hover ── */
-        .story-card { border: 1.5px solid #e8eaed; border-radius: 12px; overflow: hidden; background: #fff; transition: box-shadow .25s ease, transform .25s ease; }
+        .story-card { border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface); transition: box-shadow .25s ease, transform .25s ease, background-color .25s ease; }
         .story-card:hover { box-shadow: 0 8px 28px rgba(212,160,23,0.10); transform: translateY(-4px); }
 
         /* ── Pills ── */
-        .goal-pill { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 999px; border: 1.5px solid #dadce0; font-size: 14px; font-weight: 500; color: #3c4043; cursor: pointer; transition: background .15s, border-color .2s, color .15s, transform .15s; white-space: nowrap; background: #fff; }
-        .goal-pill:hover { border-color: #D4A017; color: #D4A017; background: #FDF6E3; transform: scale(1.03); }
+        .goal-pill { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--border-2); font-size: 14px; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: background .15s, border-color .2s, color .15s, transform .15s; white-space: nowrap; background: var(--surface); }
+        .goal-pill:hover { border-color: #D4A017; color: #D4A017; background: var(--brand-light); transform: scale(1.03); }
         .goal-pill.active { background: #D4A017; border-color: #D4A017; color: #fff; }
 
         /* ── Tab buttons ── */
         .tab-btn { font-size: 15px; font-weight: 600; padding: 10px 28px; border-radius: 999px; border: 2px solid transparent; cursor: pointer; transition: all .2s ease; }
         .tab-btn.active { background: #D4A017; color: #fff; }
-        .tab-btn:not(.active) { background: #f1f3f4; color: #3c4043; }
-        .tab-btn:not(.active):hover { background: #e8eaed; }
+        .tab-btn:not(.active) { background: var(--bg-tertiary); color: var(--text-secondary); }
+        .tab-btn:not(.active):hover { background: var(--border); }
 
         /* ── Misc ── */
-        .divider { height: 1px; background: #e8eaed; margin: 0; border: none; }
+        .landing-divider { height: 1px; background: var(--border); margin: 0; border: none; }
         .stat-block { text-align: center; }
-        .stat-block .num { font-size: 36px; font-weight: 700; color: #202124; line-height: 1.1; }
-        .stat-block .lbl { font-size: 14px; color: #5f6368; margin-top: 4px; font-weight: 500; }
+        .stat-block .num { font-size: 36px; font-weight: 700; color: var(--text-primary); line-height: 1.1; }
+        .stat-block .lbl { font-size: 14px; color: var(--text-secondary); margin-top: 4px; font-weight: 500; }
         .pills-scroll { display: flex; flex-wrap: wrap; gap: 10px; }
         @media (max-width: 640px) {
           .pills-scroll { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
@@ -161,10 +162,10 @@ export function LandingPage() {
       `}</style>
 
       {/* Nav */}
-      <nav style={{ borderBottom: '1px solid #e8eaed', background: '#fff', position: 'sticky', top: 0, zIndex: 100 }}>
+      <nav style={{ borderBottom: '1px solid var(--border)', background: 'var(--nav-bg)', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px', height: 68, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32 }}>
           {/* Logo */}
-          <div style={{ fontSize: 22, fontWeight: 700, color: '#202124', letterSpacing: '-0.02em', flexShrink: 0 }}>
+          <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', flexShrink: 0 }}>
             Em<span style={{ color: '#D4A017' }}>Maxi</span>
           </div>
 
@@ -172,19 +173,20 @@ export function LandingPage() {
           <div className="hidden md:flex" style={{ gap: 36, flex: 1, justifyContent: 'center' }}>
             {[['Features', '#features'], ['Courses', '#courses'], ['Reviews', '#reviews']].map(([label, href]) => (
               <a key={label} href={href} className="nav-link"
-                style={{ fontSize: 14, fontWeight: 500, color: '#3c4043', textDecoration: 'none', paddingBottom: 2 }}
+                style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-secondary)', textDecoration: 'none', paddingBottom: 2 }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#D4A017')}
-                onMouseLeave={e => (e.currentTarget.style.color = '#3c4043')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
               >{label}</a>
             ))}
           </div>
 
           {/* Desktop CTA buttons */}
           <div className="hidden md:flex" style={{ gap: 10, alignItems: 'center', flexShrink: 0 }}>
+            <ThemeToggle />
             <button onClick={() => navigate('/login')}
-              style={{ fontSize: 14, fontWeight: 600, color: '#3c4043', background: 'none', border: '1.5px solid #dadce0', borderRadius: 8, cursor: 'pointer', padding: '9px 18px', whiteSpace: 'nowrap' }}
+              style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', background: 'none', border: '1.5px solid var(--border-2)', borderRadius: 8, cursor: 'pointer', padding: '9px 18px', whiteSpace: 'nowrap' }}
               onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#D4A017'; (e.currentTarget as HTMLButtonElement).style.color = '#D4A017' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#dadce0'; (e.currentTarget as HTMLButtonElement).style.color = '#3c4043' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-2)'; (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-secondary)' }}
             >
               Sign in
             </button>
@@ -195,26 +197,29 @@ export function LandingPage() {
           </div>
 
           {/* Mobile hamburger */}
-          <button className="md:hidden" onClick={() => setMenuOpen(o => !o)}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, display: 'flex', flexDirection: 'column', gap: 5 }}>
-            <span style={{ display: 'block', width: 22, height: 2, background: '#3c4043', borderRadius: 2, transition: 'transform .2s', transform: menuOpen ? 'rotate(45deg) translate(5px,5px)' : 'none' }} />
-            <span style={{ display: 'block', width: 22, height: 2, background: '#3c4043', borderRadius: 2, transition: 'opacity .2s', opacity: menuOpen ? 0 : 1 }} />
-            <span style={{ display: 'block', width: 22, height: 2, background: '#3c4043', borderRadius: 2, transition: 'transform .2s', transform: menuOpen ? 'rotate(-45deg) translate(5px,-5px)' : 'none' }} />
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <ThemeToggle size="sm" />
+            <button onClick={() => setMenuOpen(o => !o)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, display: 'flex', flexDirection: 'column', gap: 5 }}>
+              <span style={{ display: 'block', width: 22, height: 2, background: 'var(--text-secondary)', borderRadius: 2, transition: 'transform .2s', transform: menuOpen ? 'rotate(45deg) translate(5px,5px)' : 'none' }} />
+              <span style={{ display: 'block', width: 22, height: 2, background: 'var(--text-secondary)', borderRadius: 2, transition: 'opacity .2s', opacity: menuOpen ? 0 : 1 }} />
+              <span style={{ display: 'block', width: 22, height: 2, background: 'var(--text-secondary)', borderRadius: 2, transition: 'transform .2s', transform: menuOpen ? 'rotate(-45deg) translate(5px,-5px)' : 'none' }} />
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu dropdown */}
         {menuOpen && (
-          <div style={{ background: '#fff', borderTop: '1px solid #e8eaed', padding: '16px 32px 20px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', padding: '16px 32px 20px', display: 'flex', flexDirection: 'column', gap: 12 }}>
             {[['Features', '#features'], ['Courses', '#courses'], ['Reviews', '#reviews']].map(([label, href]) => (
               <a key={label} href={href} onClick={() => setMenuOpen(false)}
-                style={{ fontSize: 15, fontWeight: 500, color: '#3c4043', textDecoration: 'none', padding: '8px 0', borderBottom: '1px solid #f1f3f4' }}>
+                style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-secondary)', textDecoration: 'none', padding: '8px 0', borderBottom: '1px solid var(--border)' }}>
                 {label}
               </a>
             ))}
             <div style={{ display: 'flex', gap: 10, marginTop: 8 }}>
               <button onClick={() => { navigate('/login'); setMenuOpen(false) }}
-                style={{ flex: 1, fontSize: 14, fontWeight: 600, color: '#3c4043', background: 'none', border: '1.5px solid #dadce0', borderRadius: 8, cursor: 'pointer', padding: '10px' }}>
+                style={{ flex: 1, fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', background: 'none', border: '1.5px solid var(--border-2)', borderRadius: 8, cursor: 'pointer', padding: '10px' }}>
                 Sign in
               </button>
               <button onClick={() => { navigate('/signup/student'); setMenuOpen(false) }}
@@ -227,17 +232,17 @@ export function LandingPage() {
       </nav>
 
       {/* Hero */}
-      <section style={{ background: '#fff', padding: '72px 24px 64px', textAlign: 'center' }}>
+      <section style={{ background: 'var(--bg)', padding: '72px 24px 64px', textAlign: 'center' }}>
         <div style={{ maxWidth: 680, margin: '0 auto' }}>
-          <h1 className="fade-up" style={{ fontSize: 'clamp(36px, 5vw, 56px)', fontWeight: 700, color: '#202124', lineHeight: 1.1, letterSpacing: '-0.025em', marginBottom: 20 }}>
+          <h1 className="fade-up" style={{ fontSize: 'clamp(36px, 5vw, 56px)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.1, letterSpacing: '-0.025em', marginBottom: 20 }}>
             Here to help you grow
           </h1>
-          <p className="fade-up stagger-1" style={{ fontSize: 18, color: '#5f6368', lineHeight: 1.65, marginBottom: 40 }}>
+          <p className="fade-up stagger-1" style={{ fontSize: 18, color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: 40 }}>
             Whether you want to build new skills, earn a certificate, or launch your own course — EmMaxi gives you the tools to get there.
           </p>
 
           {/* Tab switcher */}
-          <div className="fade-up stagger-2" style={{ display: 'inline-flex', background: '#f1f3f4', borderRadius: 999, padding: 4, gap: 4, marginBottom: 36 }}>
+          <div className="fade-up stagger-2" style={{ display: 'inline-flex', background: 'var(--bg-tertiary)', borderRadius: 999, padding: 4, gap: 4, marginBottom: 36 }}>
             <button className={`tab-btn${activeTab === 'learner' ? ' active' : ''}`}
               onClick={() => handleTabSwitch('learner')}>
               I want to learn
@@ -259,7 +264,7 @@ export function LandingPage() {
 
           {/* Category pills — top 5 from real course data */}
           <div className="fade-up stagger-3" style={{ marginBottom: 8 }}>
-            <p style={{ fontSize: 13, color: '#5f6368', marginBottom: 12 }}>
+            <p style={{ fontSize: 13, color: 'var(--text-tertiary)', marginBottom: 12 }}>
               {activeTab === 'learner' ? 'What do you want to learn?' : 'What will you teach?'}
             </p>
             <div className="pills-scroll" style={{ justifyContent: 'center' }}>
@@ -284,10 +289,10 @@ export function LandingPage() {
         </div>
       </section>
 
-      <hr className="divider" />
+      <hr className="landing-divider" />
 
       {/* Stats — computed live from course data */}
-      <section style={{ background: '#f8f9fa', padding: '48px 24px' }}>
+      <section style={{ background: 'var(--bg-elevated)', padding: '48px 24px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 32 }}>
           {[
             [stats.students, 'Active learners'],
@@ -303,7 +308,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <hr className="divider" />
+      <hr className="landing-divider" />
 
       {/* Grow your career / Share your expertise */}
       <section id="features" style={{ padding: '64px 24px', maxWidth: 1200, margin: '0 auto' }}>
@@ -312,10 +317,10 @@ export function LandingPage() {
           <p style={{ fontSize: 13, fontWeight: 600, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 12 }}>
             {activeTab === 'learner' ? 'For learners' : 'For instructors'}
           </p>
-          <h2 style={{ fontSize: 'clamp(26px, 3.5vw, 38px)', fontWeight: 700, color: '#202124', letterSpacing: '-0.02em', marginBottom: 12, maxWidth: 480 }}>
+          <h2 style={{ fontSize: 'clamp(26px, 3.5vw, 38px)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', marginBottom: 12, maxWidth: 480 }}>
             {activeTab === 'learner' ? 'Grow your career' : 'Share your expertise'}
           </h2>
-          <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.65, maxWidth: 520 }}>
+          <p style={{ fontSize: 16, color: 'var(--text-secondary)', lineHeight: 1.65, maxWidth: 520 }}>
             {activeTab === 'learner'
               ? `Browse ${publishedCourses.length} courses across ${topCategories.length} categories. Click any category above to jump straight to what interests you.`
               : 'From your first course to a thriving student base, EmMaxi gives instructors the tools to build, publish, and earn.'}
@@ -332,7 +337,7 @@ export function LandingPage() {
                 <div className="label">{course.category}</div>
                 <h3>{course.title}</h3>
                 <p>{course.description}</p>
-                <div style={{ display: 'flex', gap: 12, fontSize: 12, color: '#5f6368', marginTop: 4 }}>
+                <div style={{ display: 'flex', gap: 12, fontSize: 12, color: 'var(--text-tertiary)', marginTop: 4 }}>
                   <span>{course.students.toLocaleString()} students</span>
                   <span>·</span>
                   <span>{course.level}</span>
@@ -367,7 +372,7 @@ export function LandingPage() {
         <div className="fade-up" style={{ marginTop: 40 }}>
           <button onClick={() => navigate('/courses')}
             style={{ fontSize: 15, fontWeight: 600, color: '#D4A017', background: 'none', border: '2px solid #D4A017', borderRadius: 8, cursor: 'pointer', padding: '12px 28px' }}
-            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#FDF6E3' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'var(--brand-light)' }}
             onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'none' }}
           >
             Explore all {activeTab === 'learner' ? 'courses' : 'tools'}
@@ -375,13 +380,13 @@ export function LandingPage() {
         </div>
       </section>
 
-      <hr className="divider" />
+      <hr className="landing-divider" />
 
       {/* Testimonials */}
       <section id="reviews" style={{ padding: '64px 24px', maxWidth: 1200, margin: '0 auto' }}>
         <div className="fade-left" style={{ marginBottom: 40 }}>
           <p style={{ fontSize: 13, fontWeight: 600, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 10 }}>Success stories</p>
-          <h2 style={{ fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 700, color: '#202124', letterSpacing: '-0.02em', maxWidth: 400 }}>
+          <h2 style={{ fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', maxWidth: 400 }}>
             What our community says
           </h2>
         </div>
@@ -389,14 +394,14 @@ export function LandingPage() {
           {testimonials.map((t, i) => (
             <div key={t.name} className={`story-card fade-up stagger-${i + 1}`} style={{ padding: 28, display: 'flex', flexDirection: 'column', gap: 16 }}>
               <StarRating rating={t.rating} size="md" />
-              <p style={{ fontSize: 15, color: '#3c4043', lineHeight: 1.65, flex: 1, margin: 0 }}>"{t.text}"</p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingTop: 16, borderTop: '1px solid #e8eaed' }}>
+              <p style={{ fontSize: 15, color: 'var(--text-secondary)', lineHeight: 1.65, flex: 1, margin: 0 }}>"{t.text}"</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
                 <div style={{ width: 36, height: 36, borderRadius: '50%', background: t.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 12, fontWeight: 700, flexShrink: 0 }}>
                   {t.avatar}
                 </div>
                 <div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: '#202124' }}>{t.name}</div>
-                  <div style={{ fontSize: 12, color: '#5f6368', fontWeight: 500 }}>{t.role}</div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>{t.name}</div>
+                  <div style={{ fontSize: 12, color: 'var(--text-tertiary)', fontWeight: 500 }}>{t.role}</div>
                 </div>
               </div>
             </div>
@@ -404,16 +409,16 @@ export function LandingPage() {
         </div>
       </section>
 
-      <hr className="divider" />
+      <hr className="landing-divider" />
 
       {/* CTA */}
-      <section style={{ background: '#f8f9fa', padding: '64px 24px', textAlign: 'center' }}>
+      <section style={{ background: 'var(--bg-elevated)', padding: '64px 24px', textAlign: 'center' }}>
         <div style={{ maxWidth: 600, margin: '0 auto' }}>
           <p className="fade-up" style={{ fontSize: 13, fontWeight: 600, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 16 }}>Get started today</p>
-          <h2 className="fade-up stagger-1" style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 700, color: '#202124', letterSpacing: '-0.02em', marginBottom: 16, lineHeight: 1.1 }}>
+          <h2 className="fade-up stagger-1" style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', marginBottom: 16, lineHeight: 1.1 }}>
             Ready to advance your potential?
           </h2>
-          <p className="fade-up stagger-2" style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.65, marginBottom: 36 }}>
+          <p className="fade-up stagger-2" style={{ fontSize: 16, color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: 36 }}>
             Join thousands of learners and instructors building their future on EmMaxi. Create a free account and get started today.
           </p>
           <div className="fade-up stagger-3" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -422,9 +427,9 @@ export function LandingPage() {
               Create free account
             </button>
             <button onClick={() => navigate('/courses')}
-              style={{ fontSize: 15, fontWeight: 600, color: '#D4A017', background: '#fff', border: '2px solid #dadce0', borderRadius: 8, cursor: 'pointer', padding: '14px 32px' }}
+              style={{ fontSize: 15, fontWeight: 600, color: '#D4A017', background: 'var(--surface)', border: '2px solid var(--border-2)', borderRadius: 8, cursor: 'pointer', padding: '14px 32px' }}
               onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#D4A017' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#dadce0' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-2)' }}
             >
               Explore courses
             </button>
@@ -433,20 +438,20 @@ export function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer style={{ borderTop: '1px solid #e8eaed', background: '#fff', padding: '32px 24px' }}>
+      <footer style={{ borderTop: '1px solid var(--border)', background: 'var(--bg)', padding: '32px 24px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-          <div style={{ fontSize: 20, fontWeight: 700, color: '#202124', letterSpacing: '-0.02em' }}>
+          <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
             Em<span style={{ color: '#D4A017' }}>Maxi</span>
           </div>
           <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
             {['Features', 'Courses', 'Reviews'].map(item => (
-              <a key={item} href={`#${item.toLowerCase()}`} style={{ fontSize: 13, fontWeight: 500, color: '#5f6368', textDecoration: 'none' }}
+              <a key={item} href={`#${item.toLowerCase()}`} style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-tertiary)', textDecoration: 'none' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#D4A017')}
-                onMouseLeave={e => (e.currentTarget.style.color = '#5f6368')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-tertiary)')}
               >{item}</a>
             ))}
           </div>
-          <div style={{ fontSize: 13, color: '#9aa0a6', fontWeight: 500 }}>
+          <div style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 500 }}>
             © {new Date().getFullYear()} EmMaxi. All rights reserved.
           </div>
         </div>

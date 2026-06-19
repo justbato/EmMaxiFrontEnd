@@ -56,9 +56,9 @@ export function InstructorDashboard() {
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6">
         <div>
           {/* Revenue chart */}
-          <Card className="p-5 mb-5">
+          <Card className="p-5 mb-5 transition-colors">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-[15px] font-[700]">Revenue overview</h2>
+              <h2 className="text-[15px] font-[700] text-[var(--text-primary)]">Revenue overview</h2>
               <Badge variant="green">80% your share</Badge>
             </div>
             <div className="flex items-end gap-2 h-[100px] mb-2">
@@ -72,20 +72,20 @@ export function InstructorDashboard() {
             </div>
             <div className="flex gap-2">
               {CHART_DATA.map(d => (
-                <div key={d.month} className="flex-1 text-center text-[9px] text-[#6B6B6B]">{d.month}</div>
+                <div key={d.month} className="flex-1 text-center text-[9px] text-[var(--text-tertiary)]">{d.month}</div>
               ))}
             </div>
-            <div className="flex gap-6 mt-4 pt-4 border-t border-[#E8E8E8]">
-              <div><div className="text-[11px] text-[#6B6B6B]">Total earned</div><div className="text-[18px] font-[700] text-[#D4A017]">₦541K</div></div>
-              <div><div className="text-[11px] text-[#6B6B6B]">This month</div><div className="text-[18px] font-[700]">₦145K</div></div>
-              <div><div className="text-[11px] text-[#6B6B6B]">Pending payout</div><div className="text-[18px] font-[700] text-[#10B981]">₦72K</div></div>
+            <div className="flex gap-6 mt-4 pt-4 border-t border-[var(--border)]">
+              <div><div className="text-[11px] text-[var(--text-secondary)]">Total earned</div><div className="text-[18px] font-[700] text-[#D4A017]">₦541K</div></div>
+              <div><div className="text-[11px] text-[var(--text-secondary)]">This month</div><div className="text-[18px] font-[700] text-[var(--text-primary)]">₦145K</div></div>
+              <div><div className="text-[11px] text-[var(--text-secondary)]">Pending payout</div><div className="text-[18px] font-[700] text-[#10B981]">₦72K</div></div>
             </div>
           </Card>
 
           {/* Courses */}
-          <Card className="p-5">
+          <Card className="p-5 transition-colors">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-[15px] font-[700]">My courses</h2>
+              <h2 className="text-[15px] font-[700] text-[var(--text-primary)]">My courses</h2>
               <Btn size="sm" variant="outline" onClick={() => navigate('/instructor/builder')}>+ New course</Btn>
             </div>
             <div className="flex gap-2 flex-wrap mb-4">
@@ -95,11 +95,11 @@ export function InstructorDashboard() {
             </div>
             <div className="space-y-3">
               {filtered.map(course => (
-                <div key={course.id} className="flex items-center gap-4 p-4 rounded-[12px] border border-[#E8E8E8] hover:border-[#D4A017] hover:bg-[#FFFDF7] transition-all">
+                <div key={course.id} className="flex items-center gap-4 p-4 rounded-[12px] border border-[var(--border)] hover:border-[#D4A017] hover:bg-[var(--surface-hover)] transition-all">
                   <div className="w-12 h-12 rounded-[10px] flex items-center justify-center text-[22px] flex-shrink-0" style={{ background: course.gradient }}>{course.emoji}</div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-[13px] font-[600] text-[#111] truncate">{course.title}</div>
-                    <div className="text-[11px] text-[#6B6B6B] mt-0.5">{course.students.toLocaleString()} students · ₦{course.price.toLocaleString()}</div>
+                    <div className="text-[13px] font-[600] text-[var(--text-primary)] truncate">{course.title}</div>
+                    <div className="text-[11px] text-[var(--text-secondary)] mt-0.5">{course.students.toLocaleString()} students · ₦{course.price.toLocaleString()}</div>
                     <div className="flex items-center gap-2 mt-1.5">
                       <span className="text-[#D4A017] text-[11px]">★ {course.rating}</span>
                     </div>
@@ -119,30 +119,30 @@ export function InstructorDashboard() {
         {/* Right col */}
         <div>
           {/* Recent students */}
-          <Card className="p-5 mb-5">
-            <h3 className="text-[14px] font-[700] mb-4">Recent enrollments</h3>
+          <Card className="p-5 mb-5 transition-colors">
+            <h3 className="text-[14px] font-[700] text-[var(--text-primary)] mb-4">Recent enrollments</h3>
             {[
               { name: 'Ada Obi', course: 'Advanced React Patterns', time: '2h ago', color: '#D4A017' },
               { name: 'Chidi Nwosu', course: 'Node.js REST APIs', time: '4h ago', color: '#10B981' },
               { name: 'Emeka Eze', course: 'Advanced React Patterns', time: '1d ago', color: '#6366F1' },
               { name: 'Fatima Bello', course: 'Node.js REST APIs', time: '1d ago', color: '#EC4899' },
             ].map((s, i) => (
-              <div key={i} className="flex items-center gap-3 py-2.5 border-b border-[#E8E8E8] last:border-0">
+              <div key={i} className="flex items-center gap-3 py-2.5 border-b border-[var(--border)] last:border-0">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[11px] font-[700] flex-shrink-0" style={{ background: s.color }}>
                   {s.name.split(' ').map(w => w[0]).join('')}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-[12px] font-[600] text-[#111] truncate">{s.name}</div>
-                  <div className="text-[10px] text-[#6B6B6B] truncate">{s.course}</div>
+                  <div className="text-[12px] font-[600] text-[var(--text-primary)] truncate">{s.name}</div>
+                  <div className="text-[10px] text-[var(--text-secondary)] truncate">{s.course}</div>
                 </div>
-                <span className="text-[10px] text-[#6B6B6B] flex-shrink-0">{s.time}</span>
+                <span className="text-[10px] text-[var(--text-tertiary)] flex-shrink-0">{s.time}</span>
               </div>
             ))}
           </Card>
 
           {/* Quick actions */}
-          <Card className="p-5">
-            <h3 className="text-[14px] font-[700] mb-4">Quick actions</h3>
+          <Card className="p-5 transition-colors">
+            <h3 className="text-[14px] font-[700] text-[var(--text-primary)] mb-4">Quick actions</h3>
             <div className="space-y-2">
               {[
                 { icon: '➕', label: 'Create new course', action: () => navigate('/instructor/builder') },
@@ -151,9 +151,9 @@ export function InstructorDashboard() {
                 { icon: '⚙️', label: 'Edit profile & settings', action: () => navigate('/instructor/settings') },
               ].map(a => (
                 <button key={a.label} onClick={a.action}
-                  className="w-full flex items-center gap-3 p-3 rounded-[10px] border border-[#E8E8E8] hover:border-[#D4A017] hover:bg-[#FFFDF7] transition-all text-left">
+                  className="w-full flex items-center gap-3 p-3 rounded-[10px] border border-[var(--border)] hover:border-[#D4A017] hover:bg-[var(--surface-hover)] transition-all text-left">
                   <span className="text-[18px]">{a.icon}</span>
-                  <span className="text-[13px] font-[500] text-[#111]">{a.label}</span>
+                  <span className="text-[13px] font-[500] text-[var(--text-primary)]">{a.label}</span>
                   <span className="ml-auto text-[#D4A017] text-[12px]">→</span>
                 </button>
               ))}

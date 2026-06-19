@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { NotifProvider } from './context/NotifContext'
+import { ThemeProvider } from './context/ThemeContext'
 import { ProtectedRoute } from './components/ProtectedRoute'
 
 import { LandingPage } from './pages/Landing'
@@ -66,11 +67,13 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <NotifProvider>
-          <AppRoutes />
-        </NotifProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <NotifProvider>
+            <AppRoutes />
+          </NotifProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   )
 }

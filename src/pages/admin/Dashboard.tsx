@@ -241,13 +241,13 @@ export function AdminDashboard() {
 
   const statusBadge = (status: UserStatus) => {
     if (status === 'active') return <Badge variant="green">● Active</Badge>
-    if (status === 'suspended') return <span className="inline-block px-[10px] py-[3px] rounded-full text-[11px] font-[600] bg-[#FEF3C7] text-[#92400E]">⚠ Suspended</span>
+    if (status === 'suspended') return <span className="inline-block px-[10px] py-[3px] rounded-full text-[11px] font-[600] bg-[#FEF3C7] dark:bg-[rgba(212,160,23,.15)] text-[#92400E]">⚠ Suspended</span>
     return <Badge variant="red">✕ Banned</Badge>
   }
 
   const roleBadge = (r: string) => {
     if (r === 'super_admin') return <Badge variant="admin">👑 Super Admin</Badge>
-    if (r === 'moderator') return <span className="inline-block px-[10px] py-[3px] rounded-full text-[11px] font-[600] bg-[#EDE9FE] text-[#5B21B6]">🛡 Moderator</span>
+    if (r === 'moderator') return <span className="inline-block px-[10px] py-[3px] rounded-full text-[11px] font-[600] bg-[#EDE9FE] dark:bg-[rgba(99,102,241,.12)] text-[#5B21B6]">🛡 Moderator</span>
     return <Badge>Admin</Badge>
   }
 
@@ -265,7 +265,7 @@ export function AdminDashboard() {
     <DashLayout sidebarItems={NAV} title="Admin Panel" subtitle="Platform overview and management">
       {/* Moderator info banner */}
       {isModerator && (
-        <div className="flex items-center gap-3 bg-[#EDE9FE] border border-[#C4B5FD] rounded-[12px] px-4 py-3 mb-5">
+        <div className="flex items-center gap-3 bg-[#EDE9FE] dark:bg-[rgba(99,102,241,.12)] border border-[#C4B5FD] rounded-[12px] px-4 py-3 mb-5">
           <span className="text-[16px]">🛡</span>
           <p className="text-[12px] text-[#5B21B6] font-[500]">You are logged in as a <strong>Moderator</strong>. Financial records and admin management are restricted. You can review content, suspend/ban users, and approve/reject courses.</p>
         </div>
@@ -297,11 +297,11 @@ export function AdminDashboard() {
                 { icon: '💰', text: 'Payout processed: ₦72K to Sarah Kim', time: '1d ago', color: '#10B981' },
                 { icon: '✕', text: 'User @spam_bot banned by automated system', time: '1d ago', color: '#EF4444' },
               ].map((a, i) => (
-                <div key={i} className="flex items-start gap-3 py-2.5 border-b border-[#E8E8E8] last:border-0">
+                <div key={i} className="flex items-start gap-3 py-2.5 border-b border-[var(--border)] last:border-0">
                   <div className="w-7 h-7 rounded-full flex items-center justify-center text-[14px] flex-shrink-0" style={{ background: `${a.color}22` }}>{a.icon}</div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-[12px] text-[#333] leading-[1.4]">{a.text}</div>
-                    <div className="text-[10px] text-[#6B6B6B] mt-0.5">{a.time}</div>
+                    <div className="text-[12px] text-[var(--text-secondary)] leading-[1.4]">{a.text}</div>
+                    <div className="text-[10px] text-[var(--text-tertiary)] mt-0.5">{a.time}</div>
                   </div>
                 </div>
               ))}
@@ -309,11 +309,11 @@ export function AdminDashboard() {
             <Card className="p-5">
               <h3 className="text-[14px] font-[700] mb-4">Courses pending review</h3>
               {PENDING_COURSES.filter(c => courses.find(x => x.id === c.id)?.status === 'pending').map(c => (
-                <div key={c.id} className="flex items-center gap-3 py-3 border-b border-[#E8E8E8] last:border-0">
+                <div key={c.id} className="flex items-center gap-3 py-3 border-b border-[var(--border)] last:border-0">
                   <div className="w-10 h-10 rounded-[8px] flex items-center justify-center text-[20px] flex-shrink-0" style={{ background: c.gradient }}>{c.emoji}</div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-[12px] font-[600] text-[#111] truncate">{c.title}</div>
-                    <div className="text-[10px] text-[#6B6B6B]">{c.instructor} · {c.submitted}</div>
+                    <div className="text-[12px] font-[600] text-[var(--text-primary)] truncate">{c.title}</div>
+                    <div className="text-[10px] text-[var(--text-tertiary)]">{c.instructor} · {c.submitted}</div>
                   </div>
                   <div className="flex gap-1.5">
                     <Btn size="sm" variant="outline" onClick={() => setPreviewCourse(c)}>Preview</Btn>
@@ -323,7 +323,7 @@ export function AdminDashboard() {
                 </div>
               ))}
               {PENDING_COURSES.filter(c => courses.find(x => x.id === c.id)?.status === 'pending').length === 0 && (
-                <p className="text-[13px] text-[#6B6B6B] py-4 text-center">No pending courses 🎉</p>
+                <p className="text-[13px] text-[var(--text-tertiary)] py-4 text-center">No pending courses 🎉</p>
               )}
             </Card>
           </div>
@@ -334,38 +334,38 @@ export function AdminDashboard() {
       {view === 'students' && (
         <div>
           <div className="flex items-center gap-3 flex-wrap mb-4">
-            <div className="flex items-center gap-2 bg-white border border-[#D0D0D0] rounded-full px-4 py-2 flex-1 max-w-xs">
-              <svg className="w-3.5 h-3.5 text-[#6B6B6B]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <div className="flex items-center gap-2 bg-[var(--surface)] transition-colors border border-[var(--border-2)] rounded-full px-4 py-2 flex-1 max-w-xs">
+              <svg className="w-3.5 h-3.5 text-[var(--text-tertiary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
               <input className="flex-1 text-[13px] outline-none" placeholder="Search students…" value={search} onChange={e => setSearch(e.target.value)} />
             </div>
             {['All', 'Active', 'Suspended', 'Banned'].map(f => (
               <FilterPill key={f} active={studentFilter === f} onClick={() => setStudentFilter(f)}>{f}</FilterPill>
             ))}
           </div>
-          <div className="bg-white border border-[#E8E8E8] rounded-[14px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,.06)]">
+          <div className="bg-[var(--surface)] transition-colors border border-[var(--border)] rounded-[14px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,.06)]">
             <div className="overflow-x-auto">
               <table className="w-full text-[12px] border-collapse">
                 <thead>
-                  <tr className="bg-[#F9F9F9] border-b border-[#E8E8E8]">
+                  <tr className="bg-[var(--bg-tertiary)] transition-colors border-b border-[var(--border)]">
                     {['Student', 'Email', 'Joined', 'Courses', 'Spent', 'Status', 'Actions'].map(h => (
-                      <th key={h} className="px-4 py-3 text-left text-[11px] text-[#6B6B6B] font-[600] uppercase tracking-[.05em] whitespace-nowrap">{h}</th>
+                      <th key={h} className="px-4 py-3 text-left text-[11px] text-[var(--text-tertiary)] font-[600] uppercase tracking-[.05em] whitespace-nowrap">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {filteredStudents.map(s => (
-                    <tr key={s.id} className="border-t border-[#E8E8E8] hover:bg-[#FDFBF3] transition-colors">
+                    <tr key={s.id} className="border-t border-[var(--border)] hover:bg-[var(--surface-hover)] transition-colors">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[10px] font-[700] flex-shrink-0" style={{ background: s.color }}>{s.name.split(' ').map(w => w[0]).join('')}</div>
+                          <div className="w-7 h-7 rounded-full flex items-center justify-center text-[var(--text-primary)] text-[10px] font-[700] flex-shrink-0" style={{ background: s.color }}>{s.name.split(' ').map(w => w[0]).join('')}</div>
                           <div>
-                            <div className="font-[600] text-[#111]">{s.name}</div>
-                            <div className="text-[10px] text-[#6B6B6B]">@{s.username}</div>
+                            <div className="font-[600] text-[var(--text-primary)]">{s.name}</div>
+                            <div className="text-[10px] text-[var(--text-tertiary)]">@{s.username}</div>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-[#6B6B6B]">{s.email}</td>
-                      <td className="px-4 py-3 text-[#6B6B6B] whitespace-nowrap">{s.joined}</td>
+                      <td className="px-4 py-3 text-[var(--text-tertiary)]">{s.email}</td>
+                      <td className="px-4 py-3 text-[var(--text-tertiary)] whitespace-nowrap">{s.joined}</td>
                       <td className="px-4 py-3 text-center">{s.courses}</td>
                       <td className="px-4 py-3 font-[600] text-[#D4A017]">{s.spent}</td>
                       <td className="px-4 py-3">{statusBadge(s.status)}</td>
@@ -387,25 +387,25 @@ export function AdminDashboard() {
 
       {/* ── INSTRUCTORS ─────────────────────────────────────── */}
       {view === 'instructors' && (
-        <div className="bg-white border border-[#E8E8E8] rounded-[14px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,.06)]">
+        <div className="bg-[var(--surface)] transition-colors border border-[var(--border)] rounded-[14px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,.06)]">
           <div className="overflow-x-auto">
             <table className="w-full text-[12px] border-collapse">
               <thead>
-                <tr className="bg-[#F9F9F9] border-b border-[#E8E8E8]">
+                <tr className="bg-[var(--bg-tertiary)] transition-colors border-b border-[var(--border)]">
                   {['Instructor', 'Courses', 'Students', 'Revenue', 'Rating', 'Status', 'Actions'].map(h => (
-                    <th key={h} className="px-4 py-3 text-left text-[11px] text-[#6B6B6B] font-[600] uppercase tracking-[.05em]">{h}</th>
+                    <th key={h} className="px-4 py-3 text-left text-[11px] text-[var(--text-tertiary)] font-[600] uppercase tracking-[.05em]">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {instructors.map(inst => (
-                  <tr key={inst.id} className="border-t border-[#E8E8E8] hover:bg-[#FDFBF3] transition-colors">
+                  <tr key={inst.id} className="border-t border-[var(--border)] hover:bg-[var(--surface-hover)] transition-colors">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[10px] font-[700]" style={{ background: inst.color }}>{inst.name.split(' ').map(w => w[0]).join('')}</div>
+                        <div className="w-7 h-7 rounded-full flex items-center justify-center text-[var(--text-primary)] text-[10px] font-[700]" style={{ background: inst.color }}>{inst.name.split(' ').map(w => w[0]).join('')}</div>
                         <div>
-                          <span className="font-[600] text-[#111]">{inst.name}</span>
-                          <div className="text-[10px] text-[#6B6B6B]">{inst.email}</div>
+                          <span className="font-[600] text-[var(--text-primary)]">{inst.name}</span>
+                          <div className="text-[10px] text-[var(--text-tertiary)]">{inst.email}</div>
                         </div>
                       </div>
                     </td>
@@ -442,13 +442,13 @@ export function AdminDashboard() {
               <FilterPill key={f} active={courseFilter === f} onClick={() => setCourseFilter(f)}>{f}</FilterPill>
             ))}
           </div>
-          <div className="bg-white border border-[#E8E8E8] rounded-[14px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,.06)]">
+          <div className="bg-[var(--surface)] transition-colors border border-[var(--border)] rounded-[14px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,.06)]">
             <div className="overflow-x-auto">
               <table className="w-full text-[12px] border-collapse">
                 <thead>
-                  <tr className="bg-[#F9F9F9] border-b border-[#E8E8E8]">
+                  <tr className="bg-[var(--bg-tertiary)] transition-colors border-b border-[var(--border)]">
                     {['Course', 'Instructor', 'Price', 'Submitted', 'Status', 'Actions'].map(h => (
-                      <th key={h} className="px-4 py-3 text-left text-[11px] text-[#6B6B6B] font-[600] uppercase tracking-[.05em]">{h}</th>
+                      <th key={h} className="px-4 py-3 text-left text-[11px] text-[var(--text-tertiary)] font-[600] uppercase tracking-[.05em]">{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -456,16 +456,16 @@ export function AdminDashboard() {
                   {filteredCourses.map(c => {
                     const pending = PENDING_COURSES.find(p => p.id === c.id)
                     return (
-                      <tr key={c.id} className="border-t border-[#E8E8E8] hover:bg-[#FDFBF3] transition-colors">
+                      <tr key={c.id} className="border-t border-[var(--border)] hover:bg-[var(--surface-hover)] transition-colors">
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-2">
                             <div className="w-9 h-9 rounded-[8px] flex items-center justify-center text-[18px] flex-shrink-0" style={{ background: c.gradient }}>{c.emoji}</div>
-                            <span className="font-[600] text-[#111] truncate max-w-[180px]">{c.title}</span>
+                            <span className="font-[600] text-[var(--text-primary)] truncate max-w-[180px]">{c.title}</span>
                           </div>
                         </td>
-                        <td className="px-4 py-3 text-[#6B6B6B]">{c.instructor}</td>
+                        <td className="px-4 py-3 text-[var(--text-tertiary)]">{c.instructor}</td>
                         <td className="px-4 py-3 font-[600] text-[#D4A017]">₦{c.price.toLocaleString()}</td>
-                        <td className="px-4 py-3 text-[#6B6B6B] whitespace-nowrap">{c.submitted}</td>
+                        <td className="px-4 py-3 text-[var(--text-tertiary)] whitespace-nowrap">{c.submitted}</td>
                         <td className="px-4 py-3">
                           {c.status === 'pending' && <Badge variant="amber">⏳ Pending</Badge>}
                           {c.status === 'approved' && <Badge variant="green">✓ Approved</Badge>}
@@ -501,7 +501,7 @@ export function AdminDashboard() {
             <Card className="p-8 text-center">
               <div className="text-[40px] mb-3">🔒</div>
               <h3 className="text-[16px] font-[700] mb-2">Access Restricted</h3>
-              <p className="text-[13px] text-[#6B6B6B]">Moderators cannot view financial records.</p>
+              <p className="text-[13px] text-[var(--text-tertiary)]">Moderators cannot view financial records.</p>
             </Card>
           ) : (
             <>
@@ -514,30 +514,30 @@ export function AdminDashboard() {
                   </Btn>
                 )}
               </div>
-              <div className="bg-white border border-[#E8E8E8] rounded-[14px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,.06)] mb-6">
+              <div className="bg-[var(--surface)] transition-colors border border-[var(--border)] rounded-[14px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,.06)] mb-6">
                 <div className="overflow-x-auto">
                   <table className="w-full text-[12px] border-collapse">
                     <thead>
-                      <tr className="bg-[#F9F9F9] border-b border-[#E8E8E8]">
+                      <tr className="bg-[var(--bg-tertiary)] transition-colors border-b border-[var(--border)]">
                         {['Instructor', 'Email', 'Pending Amount', 'Action'].map(h => (
-                          <th key={h} className="px-4 py-3 text-left text-[11px] text-[#6B6B6B] font-[600] uppercase tracking-[.05em]">{h}</th>
+                          <th key={h} className="px-4 py-3 text-left text-[11px] text-[var(--text-tertiary)] font-[600] uppercase tracking-[.05em]">{h}</th>
                         ))}
                       </tr>
                     </thead>
                     <tbody>
                       {instructors.map(inst => (
-                        <tr key={inst.id} className="border-t border-[#E8E8E8] hover:bg-[#FDFBF3] transition-colors">
+                        <tr key={inst.id} className="border-t border-[var(--border)] hover:bg-[var(--surface-hover)] transition-colors">
                           <td className="px-4 py-3">
                             <div className="flex items-center gap-2">
-                              <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[10px] font-[700]" style={{ background: inst.color }}>{inst.name.split(' ').map(w => w[0]).join('')}</div>
-                              <span className="font-[600] text-[#111]">{inst.name}</span>
+                              <div className="w-7 h-7 rounded-full flex items-center justify-center text-[var(--text-primary)] text-[10px] font-[700]" style={{ background: inst.color }}>{inst.name.split(' ').map(w => w[0]).join('')}</div>
+                              <span className="font-[600] text-[var(--text-primary)]">{inst.name}</span>
                             </div>
                           </td>
-                          <td className="px-4 py-3 text-[#6B6B6B]">{inst.email}</td>
+                          <td className="px-4 py-3 text-[var(--text-tertiary)]">{inst.email}</td>
                           <td className="px-4 py-3">
                             {inst.pendingPayout > 0
                               ? <span className="text-[14px] font-[700] text-[#10B981]">₦{inst.pendingPayout.toLocaleString()}</span>
-                              : <span className="text-[12px] text-[#6B6B6B]">No pending payout</span>}
+                              : <span className="text-[12px] text-[var(--text-tertiary)]">No pending payout</span>}
                           </td>
                           <td className="px-4 py-3">
                             {inst.pendingPayout > 0 && (
@@ -555,22 +555,22 @@ export function AdminDashboard() {
 
               {/* Payout history */}
               <h3 className="text-[15px] font-[700] mb-4">Payout History</h3>
-              <div className="bg-white border border-[#E8E8E8] rounded-[14px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,.06)]">
+              <div className="bg-[var(--surface)] transition-colors border border-[var(--border)] rounded-[14px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,.06)]">
                 <div className="overflow-x-auto">
                   <table className="w-full text-[12px] border-collapse">
                     <thead>
-                      <tr className="bg-[#F9F9F9] border-b border-[#E8E8E8]">
+                      <tr className="bg-[var(--bg-tertiary)] transition-colors border-b border-[var(--border)]">
                         {['Instructor', 'Amount', 'Date', 'Status'].map(h => (
-                          <th key={h} className="px-4 py-3 text-left text-[11px] text-[#6B6B6B] font-[600] uppercase tracking-[.05em]">{h}</th>
+                          <th key={h} className="px-4 py-3 text-left text-[11px] text-[var(--text-tertiary)] font-[600] uppercase tracking-[.05em]">{h}</th>
                         ))}
                       </tr>
                     </thead>
                     <tbody>
                       {PAYOUT_HISTORY.map(p => (
-                        <tr key={p.id} className="border-t border-[#E8E8E8] hover:bg-[#FDFBF3] transition-colors">
-                          <td className="px-4 py-3 font-[600] text-[#111]">{p.instructor}</td>
+                        <tr key={p.id} className="border-t border-[var(--border)] hover:bg-[var(--surface-hover)] transition-colors">
+                          <td className="px-4 py-3 font-[600] text-[var(--text-primary)]">{p.instructor}</td>
                           <td className="px-4 py-3 font-[600] text-[#D4A017]">₦{p.amount.toLocaleString()}</td>
-                          <td className="px-4 py-3 text-[#6B6B6B]">{p.date}</td>
+                          <td className="px-4 py-3 text-[var(--text-tertiary)]">{p.date}</td>
                           <td className="px-4 py-3"><Badge variant="green">✓ Paid</Badge></td>
                         </tr>
                       ))}
@@ -592,13 +592,13 @@ export function AdminDashboard() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <span className="text-[13px] font-[600]">Report against @{r.against}</span>
-                    <span className={`inline-block px-[10px] py-[3px] rounded-full text-[11px] font-[600] ${r.status === 'pending' ? 'bg-[#FEE2E2] text-[#991B1B]' : r.status === 'processing' ? 'bg-[#FEF3C7] text-[#92400E]' : r.status === 'dismissed' ? 'bg-[#E5E7EB] text-[#374151]' : 'bg-[#D1FAE5] text-[#065F46]'}`}>
+                    <span className={`inline-block px-[10px] py-[3px] rounded-full text-[11px] font-[600] ${r.status === 'pending' ? 'bg-[#FEE2E2] dark:bg-[rgba(239,68,68,.12)] text-[#991B1B]' : r.status === 'processing' ? 'bg-[#FEF3C7] dark:bg-[rgba(212,160,23,.15)] text-[#92400E]' : r.status === 'dismissed' ? 'bg-[#E5E7EB] dark:bg-[rgba(255,255,255,.1)] text-[#374151]' : 'bg-[#D1FAE5] dark:bg-[rgba(16,185,129,.15)] text-[#065F46]'}`}>
                       {r.status.charAt(0).toUpperCase() + r.status.slice(1)}
                     </span>
-                    <span className="text-[11px] text-[#6B6B6B]">· {r.time}</span>
+                    <span className="text-[11px] text-[var(--text-tertiary)]">· {r.time}</span>
                   </div>
-                  <div className="text-[11px] text-[#6B6B6B] mb-2">Reported by: <strong>{r.from}</strong> · {r.type}</div>
-                  <p className="text-[13px] text-[#333]">{r.reason}</p>
+                  <div className="text-[11px] text-[var(--text-tertiary)] mb-2">Reported by: <strong>{r.from}</strong> · {r.type}</div>
+                  <p className="text-[13px] text-[var(--text-secondary)]">{r.reason}</p>
                 </div>
                 <div className="flex gap-2">
                   {r.status === 'pending' && <Btn size="sm" variant="outline" onClick={() => handleStartProcessing(r.id)}>Start Processing</Btn>}
@@ -608,7 +608,7 @@ export function AdminDashboard() {
                       <Btn size="sm" variant="danger" onClick={() => setActionReport(r)}>Take Action</Btn>
                     </>
                   )}
-                  {(r.status === 'dismissed' || r.status === 'actioned') && <span className="text-[11px] text-[#6B6B6B] font-[600]">Closed</span>}
+                  {(r.status === 'dismissed' || r.status === 'actioned') && <span className="text-[11px] text-[var(--text-tertiary)] font-[600]">Closed</span>}
                 </div>
               </div>
             </Card>
@@ -627,12 +627,12 @@ export function AdminDashboard() {
                 value={newAdminEmail}
                 onChange={e => setNewAdminEmail(e.target.value)}
                 placeholder="user@example.com"
-                className="flex-1 min-w-[200px] px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017]"
+                className="flex-1 min-w-[200px] px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017]"
               />
               <select
                 value={newAdminRole}
                 onChange={e => setNewAdminRole(e.target.value as 'admin' | 'moderator')}
-                className="px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] bg-white"
+                className="px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] bg-[var(--surface)] transition-colors"
               >
                 <option value="admin">Admin</option>
                 <option value="moderator">Moderator</option>
@@ -642,28 +642,28 @@ export function AdminDashboard() {
           </Card>
 
           {/* Admin list */}
-          <div className="bg-white border border-[#E8E8E8] rounded-[14px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,.06)]">
+          <div className="bg-[var(--surface)] transition-colors border border-[var(--border)] rounded-[14px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,.06)]">
             <div className="overflow-x-auto">
               <table className="w-full text-[12px] border-collapse">
                 <thead>
-                  <tr className="bg-[#F9F9F9] border-b border-[#E8E8E8]">
+                  <tr className="bg-[var(--bg-tertiary)] transition-colors border-b border-[var(--border)]">
                     {['Admin', 'Email', 'Role', 'Joined', 'Actions'].map(h => (
-                      <th key={h} className="px-4 py-3 text-left text-[11px] text-[#6B6B6B] font-[600] uppercase tracking-[.05em]">{h}</th>
+                      <th key={h} className="px-4 py-3 text-left text-[11px] text-[var(--text-tertiary)] font-[600] uppercase tracking-[.05em]">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {adminUsers.map(a => (
-                    <tr key={a.id} className="border-t border-[#E8E8E8] hover:bg-[#FDFBF3] transition-colors">
+                    <tr key={a.id} className="border-t border-[var(--border)] hover:bg-[var(--surface-hover)] transition-colors">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[10px] font-[700]" style={{ background: a.color }}>{a.name.split(' ').map(w => w[0]).join('')}</div>
-                          <span className="font-[600] text-[#111]">{a.name}</span>
+                          <div className="w-7 h-7 rounded-full flex items-center justify-center text-[var(--text-primary)] text-[10px] font-[700]" style={{ background: a.color }}>{a.name.split(' ').map(w => w[0]).join('')}</div>
+                          <span className="font-[600] text-[var(--text-primary)]">{a.name}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-[#6B6B6B]">{a.email}</td>
+                      <td className="px-4 py-3 text-[var(--text-tertiary)]">{a.email}</td>
                       <td className="px-4 py-3">{roleBadge(a.role)}</td>
-                      <td className="px-4 py-3 text-[#6B6B6B]">{a.joined}</td>
+                      <td className="px-4 py-3 text-[var(--text-tertiary)]">{a.joined}</td>
                       <td className="px-4 py-3">
                         <div className="flex gap-1.5">
                           {a.role === 'admin' && (
@@ -700,9 +700,9 @@ export function AdminDashboard() {
       {payConfirm && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4" onClick={() => setPayConfirm(null)}>
           <div className="absolute inset-0 bg-[rgba(0,0,0,.6)] backdrop-blur-sm" />
-          <div className="relative bg-white rounded-[20px] p-8 w-full max-w-sm shadow-[0_24px_80px_rgba(0,0,0,.25)] animate-[pageSlideIn_.25s_both]" onClick={e => e.stopPropagation()}>
+          <div className="relative bg-[var(--surface)] transition-colors rounded-[20px] p-8 w-full max-w-sm shadow-[0_24px_80px_rgba(0,0,0,.25)] animate-[pageSlideIn_.25s_both]" onClick={e => e.stopPropagation()}>
             <h3 className="text-[17px] font-[700] mb-2">Confirm Payout</h3>
-            <p className="text-[13px] text-[#555] mb-6 leading-[1.6]">
+            <p className="text-[13px] text-[var(--text-secondary)] mb-6 leading-[1.6]">
               You are about to pay <strong className="text-[#D4A017]">₦{payConfirm.pendingPayout.toLocaleString()}</strong> to <strong>{payConfirm.name}</strong>. This action cannot be undone.
             </p>
             <div className="flex gap-3">
@@ -717,15 +717,15 @@ export function AdminDashboard() {
       {dismissReport && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4" onClick={() => setDismissReport(null)}>
           <div className="absolute inset-0 bg-[rgba(0,0,0,.6)] backdrop-blur-sm" />
-          <div className="relative bg-white rounded-[20px] p-8 w-full max-w-sm shadow-[0_24px_80px_rgba(0,0,0,.25)] animate-[pageSlideIn_.25s_both]" onClick={e => e.stopPropagation()}>
+          <div className="relative bg-[var(--surface)] transition-colors rounded-[20px] p-8 w-full max-w-sm shadow-[0_24px_80px_rgba(0,0,0,.25)] animate-[pageSlideIn_.25s_both]" onClick={e => e.stopPropagation()}>
             <h3 className="text-[17px] font-[700] mb-2">Dismiss Report</h3>
-            <p className="text-[13px] text-[#555] mb-4">Provide a reason for dismissing this report. This will be sent as feedback to the reporter.</p>
+            <p className="text-[13px] text-[var(--text-secondary)] mb-4">Provide a reason for dismissing this report. This will be sent as feedback to the reporter.</p>
             <textarea
               rows={3}
               value={dismissReason}
               onChange={e => setDismissReason(e.target.value)}
               placeholder="Reason for dismissal..."
-              className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] resize-y mb-6"
+              className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] resize-y mb-6"
             />
             <div className="flex gap-3">
               <Btn variant="primary" onClick={handleDismiss} disabled={!dismissReason.trim()}>Submit</Btn>
@@ -739,12 +739,12 @@ export function AdminDashboard() {
       {actionReport && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4" onClick={() => setActionReport(null)}>
           <div className="absolute inset-0 bg-[rgba(0,0,0,.6)] backdrop-blur-sm" />
-          <div className="relative bg-white rounded-[20px] p-8 w-full max-w-md shadow-[0_24px_80px_rgba(0,0,0,.25)] animate-[pageSlideIn_.25s_both]" onClick={e => e.stopPropagation()}>
+          <div className="relative bg-[var(--surface)] transition-colors rounded-[20px] p-8 w-full max-w-md shadow-[0_24px_80px_rgba(0,0,0,.25)] animate-[pageSlideIn_.25s_both]" onClick={e => e.stopPropagation()}>
             <h3 className="text-[17px] font-[700] mb-4">Take Action on @{actionReport.against}</h3>
             
             <div className="mb-4">
-              <label className="block text-[12px] font-[600] text-[#333] mb-1">Action Type</label>
-              <select value={actionType} onChange={e => setActionType(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017]">
+              <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Action Type</label>
+              <select value={actionType} onChange={e => setActionType(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017]">
                 <option value="suspend">Suspend User</option>
                 <option value="ban">Permanently Ban User</option>
               </select>
@@ -752,8 +752,8 @@ export function AdminDashboard() {
 
             {actionType === 'suspend' && (
               <div className="mb-4">
-                <label className="block text-[12px] font-[600] text-[#333] mb-1">Duration</label>
-                <select value={actionDuration} onChange={e => setActionDuration(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017]">
+                <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Duration</label>
+                <select value={actionDuration} onChange={e => setActionDuration(e.target.value)} className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017]">
                   <option value="24 hours">24 hours</option>
                   <option value="7 days">7 days</option>
                   <option value="30 days">30 days</option>
@@ -762,13 +762,13 @@ export function AdminDashboard() {
             )}
 
             <div className="mb-6">
-              <label className="block text-[12px] font-[600] text-[#333] mb-1">Feedback to Reporter (Optional)</label>
+              <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Feedback to Reporter (Optional)</label>
               <textarea
                 rows={2}
                 value={actionFeedback}
                 onChange={e => setActionFeedback(e.target.value)}
                 placeholder="Let the reporter know what action was taken..."
-                className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] resize-y"
+                className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] resize-y"
               />
             </div>
 

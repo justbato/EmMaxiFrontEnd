@@ -3,6 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { Btn } from '../components/ui'
 import { getOrderStatus, type OrderStatus } from '../lib/payments'
 import { DEMO_COURSES } from '../types'
+import { ThemeToggle } from '../components/ui/ThemeToggle'
 
 const POLL_INTERVAL = 4000 // 4 seconds, per the payment brief
 
@@ -71,7 +72,7 @@ export function PaymentStatusPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#F5F5F5] flex flex-col">
+        <div className="min-h-screen bg-[var(--bg-secondary)] flex flex-col transition-colors">
             <style>{`
         @keyframes pulseRing {
           0%, 100% { box-shadow: 0 0 0 0 rgba(212,160,23,.4); }
@@ -86,38 +87,39 @@ export function PaymentStatusPage() {
       `}</style>
 
             {/* Nav */}
-            <nav className="flex items-center justify-between bg-[#111] border-b border-[rgba(212,160,23,.15)] px-4 md:px-12 py-3.5">
-                <div className="text-[22px] font-[700] text-white cursor-pointer" style={{ fontFamily: 'Clash Display, sans-serif' }} onClick={() => navigate('/')}>
+            <nav className="flex items-center justify-between bg-[var(--nav-bg)] border-b border-[var(--nav-border)] px-4 md:px-12 py-3.5 transition-colors">
+                <div className="text-[22px] font-[700] text-[var(--text-primary)] cursor-pointer" style={{ fontFamily: 'Clash Display, sans-serif' }} onClick={() => navigate('/')}>
                     Em<span className="text-[#D4A017]">Maxi</span>
                 </div>
+                <ThemeToggle size="sm" />
             </nav>
 
             <div className="flex-1 flex items-center justify-center px-4 py-12">
                 <div className="w-full max-w-[480px]">
-                    <div className="bg-white border border-[#E8E8E8] rounded-[20px] p-7 md:p-8 shadow-[0_8px_32px_rgba(0,0,0,.06)] text-center">
+                    <div className="bg-[var(--surface)] border border-[var(--border)] rounded-[20px] p-7 md:p-8 shadow-[var(--shadow)] text-center transition-colors">
 
                         {/* Status ring/icon */}
                         <div className="flex justify-center mb-5">
-                            <div className={`w-20 h-20 rounded-full flex items-center justify-center text-[36px] ${isPaid ? 'bg-[#D1FAE5]' : 'bg-[#FDF6DC] ring-pending'}`}>
+                            <div className={`w-20 h-20 rounded-full flex items-center justify-center text-[36px] ${isPaid ? 'bg-[#D1FAE5] dark:bg-[rgba(16,185,129,.2)]' : 'bg-[#FDF6DC] dark:bg-[rgba(212,160,23,.15)] ring-pending'}`}>
                                 {isPaid ? '✅' : '⏳'}
                             </div>
                         </div>
 
                         {/* Title + subtitle */}
-                        <h1 className="text-[22px] font-[700] mb-1.5" style={{ fontFamily: 'Clash Display, sans-serif' }}>
+                        <h1 className="text-[22px] font-[700] mb-1.5 text-[var(--text-primary)]" style={{ fontFamily: 'Clash Display, sans-serif' }}>
                             {isPaid ? 'Payment confirmed!' : 'Waiting for your transfer'}
                         </h1>
-                        <p className="text-[13px] text-[#6B6B6B] mb-6 leading-[1.6]">
+                        <p className="text-[13px] text-[var(--text-secondary)] mb-6 leading-[1.6]">
                             {isPaid
                                 ? <>Your enrollment is confirmed and the download link has been sent to your email.</>
                                 : <>We're checking for your bank transfer. This usually takes a few moments after you send it.</>}
                         </p>
 
                         {/* Order reference */}
-                        <div className="bg-[#F9F9F9] border border-[#E8E8E8] rounded-[10px] py-3 px-4 mb-6">
-                            <div className="text-[10px] text-[#6B6B6B] uppercase tracking-[.08em] font-[600] mb-0.5">Order reference</div>
-                            <div className="text-[14px] font-[700] text-[#111] tracking-[.04em]">{reference}</div>
-                            {course && <div className="text-[11px] text-[#6B6B6B] mt-1">{course.title}</div>}
+                        <div className="bg-[var(--bg-tertiary)] border border-[var(--border)] rounded-[10px] py-3 px-4 mb-6 transition-colors">
+                            <div className="text-[10px] text-[var(--text-tertiary)] uppercase tracking-[.08em] font-[600] mb-0.5">Order reference</div>
+                            <div className="text-[14px] font-[700] text-[var(--text-primary)] tracking-[.04em]">{reference}</div>
+                            {course && <div className="text-[11px] text-[var(--text-secondary)] mt-1">{course.title}</div>}
                         </div>
 
                         {/* Step tracker */}
@@ -126,16 +128,16 @@ export function PaymentStatusPage() {
                                 const st = stepStatus(step.key)
                                 return (
                                     <div key={step.key} className="flex items-center gap-3">
-                                        <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-[700] flex-shrink-0 ${st === 'done' ? 'bg-[#10B981] text-white'
-                                                : st === 'active' ? 'bg-[#FDF6DC] text-[#D4A017] border-2 border-[#D4A017] dot-active'
-                                                    : 'bg-[#F0F0F0] text-[#B0B0B0]'
+                                        <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-[700] flex-shrink-0 transition-colors ${st === 'done' ? 'bg-[#10B981] text-white'
+                                                : st === 'active' ? 'bg-[var(--brand-light)] text-[#D4A017] border-2 border-[#D4A017] dot-active'
+                                                    : 'bg-[var(--border-2)] text-[var(--text-tertiary)]'
                                             }`}>
                                             {st === 'done' ? '✓' : i + 1}
                                         </div>
-                                        <div className={`text-[13px] font-[500] ${st === 'pending' ? 'text-[#B0B0B0]' : 'text-[#111]'}`}>
+                                        <div className={`text-[13px] font-[500] ${st === 'pending' ? 'text-[var(--text-tertiary)]' : 'text-[var(--text-primary)]'}`}>
                                             {step.label}
                                             {st === 'active' && <span className="text-[#D4A017] ml-1.5 text-[11px]">checking…</span>}
-                                            {step.key === 'download' && st === 'pending' && <span className="text-[#B0B0B0] ml-1.5 text-[11px]">🔒 locked until paid</span>}
+                                            {step.key === 'download' && st === 'pending' && <span className="text-[var(--text-tertiary)] ml-1.5 text-[11px]">🔒 locked until paid</span>}
                                         </div>
                                     </div>
                                 )
@@ -143,7 +145,7 @@ export function PaymentStatusPage() {
                         </div>
 
                         {pollError && (
-                            <div className="bg-[#FEF2F2] border border-[#FECACA] rounded-[8px] px-3 py-2.5 text-[12px] text-[#991B1B] mb-5">
+                            <div className="bg-[#FEF2F2] dark:bg-[rgba(239,68,68,.1)] border border-[#FECACA] dark:border-[rgba(239,68,68,.3)] rounded-[8px] px-3 py-2.5 text-[12px] text-[#991B1B] dark:text-[#F87171] mb-5 transition-colors">
                                 {pollError}
                             </div>
                         )}
@@ -155,7 +157,7 @@ export function PaymentStatusPage() {
                         )}
                     </div>
 
-                    <p className="text-center text-[11px] text-[#6B6B6B] mt-4">
+                    <p className="text-center text-[11px] text-[var(--text-tertiary)] mt-4">
                         Checking status every 4 seconds — you can safely close this page and come back later.
                     </p>
                 </div>

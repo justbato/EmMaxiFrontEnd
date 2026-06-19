@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CourseCard } from '../components/CourseCard'
 import { FilterPill } from '../components/ui'
+import { ThemeToggle } from '../components/ui/ThemeToggle'
 import { DEMO_COURSES } from '../types'
 
 const CATEGORIES = ['All', 'Web Dev', 'Design', 'Data Science', 'Business', 'Mobile', 'Cloud', 'Security']
@@ -24,30 +25,31 @@ export function CoursesPage() {
   if (sort === 'Price: High to Low') filtered = [...filtered].sort((a, b) => b.price - a.price)
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text-primary)] transition-colors">
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between bg-[#111] border-b border-[rgba(212,160,23,.15)] shadow-[0_2px_20px_rgba(0,0,0,.3)] px-4 md:px-12 py-3.5">
-        <div className="text-[22px] font-[700] text-white cursor-pointer" style={{ fontFamily: 'Clash Display, sans-serif' }} onClick={() => navigate('/')}>Em<span className="text-[#D4A017]">Maxi</span></div>
-        <div className="flex-1 max-w-sm mx-4 md:mx-8 hidden sm:flex items-center gap-2 bg-[rgba(255,255,255,.1)] border border-[rgba(255,255,255,.15)] rounded-full px-4 py-2">
-          <svg className="w-3.5 h-3.5 text-[rgba(255,255,255,.4)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
-          <input className="bg-transparent border-none text-white text-[13px] outline-none flex-1 placeholder-[rgba(255,255,255,.4)]" placeholder="Search courses, topics, instructors…" value={search} onChange={e => setSearch(e.target.value)} />
+      <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between bg-[var(--nav-bg)] border-b border-[var(--nav-border)] shadow-md px-4 md:px-12 py-3.5 transition-colors">
+        <div className="text-[22px] font-[700] text-[var(--text-primary)] cursor-pointer" style={{ fontFamily: 'Clash Display, sans-serif' }} onClick={() => navigate('/')}>Em<span className="text-[#D4A017]">Maxi</span></div>
+        <div className="flex-1 max-w-sm mx-4 md:mx-8 hidden sm:flex items-center gap-2 bg-[var(--surface-hover)] border border-[var(--border)] rounded-full px-4 py-2 transition-colors">
+          <svg className="w-3.5 h-3.5 text-[var(--text-tertiary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
+          <input className="bg-transparent border-none text-[var(--text-primary)] text-[13px] outline-none flex-1 placeholder-[var(--text-tertiary)]" placeholder="Search courses, topics, instructors…" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
-        <div className="flex gap-2">
-          <button className="px-4 py-1.5 rounded-full text-[13px] font-[600] border border-[rgba(255,255,255,.2)] text-white bg-[rgba(255,255,255,.07)] hover:border-[#D4A017] transition-all" onClick={() => navigate('/login')}>Sign in</button>
-          <button className="px-4 py-1.5 rounded-full text-[13px] font-[600] bg-[#D4A017] text-[#111] shadow-[0_4px_20px_rgba(212,160,23,.35)] hover:bg-[#C8920F] transition-all" onClick={() => navigate('/signup')}>Get started</button>
+        <div className="flex gap-2 items-center">
+          <ThemeToggle size="sm" />
+          <button className="px-4 py-1.5 rounded-full text-[13px] font-[600] border border-[var(--border)] text-[var(--text-primary)] bg-[var(--surface)] hover:border-[#D4A017] transition-all hidden sm:block" onClick={() => navigate('/login')}>Sign in</button>
+          <button className="px-4 py-1.5 rounded-full text-[13px] font-[600] bg-[#D4A017] text-[var(--text-primary)] shadow-[var(--shadow-gold)] hover:bg-[#C8920F] transition-all" onClick={() => navigate('/signup')}>Get started</button>
         </div>
       </nav>
 
       <div className="pt-20 px-4 md:px-12 pb-16 max-w-[1200px] mx-auto">
         <div className="mb-6 mt-2">
-          <h1 className="text-[28px] font-[600] text-[#111]" style={{ fontFamily: 'Clash Display, sans-serif' }}>Browse courses</h1>
-          <p className="text-[#333] mt-1">Explore {DEMO_COURSES.filter(c => c.status === 'published').length} courses across all categories</p>
+          <h1 className="text-[28px] font-[600] text-[var(--text-primary)]" style={{ fontFamily: 'Clash Display, sans-serif' }}>Browse courses</h1>
+          <p className="text-[var(--text-secondary)] mt-1">Explore {DEMO_COURSES.filter(c => c.status === 'published').length} courses across all categories</p>
         </div>
 
         {/* Mobile search */}
-        <div className="sm:hidden flex items-center gap-2 bg-white border border-[#D0D0D0] rounded-full px-4 py-2 mb-4">
-          <svg className="w-3.5 h-3.5 text-[#6B6B6B]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
-          <input className="flex-1 text-[13px] outline-none" placeholder="Search…" value={search} onChange={e => setSearch(e.target.value)} />
+        <div className="sm:hidden flex items-center gap-2 bg-[var(--surface)] border border-[var(--border)] rounded-full px-4 py-2 mb-4 transition-colors">
+          <svg className="w-3.5 h-3.5 text-[var(--text-tertiary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
+          <input className="flex-1 bg-transparent border-none text-[var(--text-primary)] text-[13px] outline-none placeholder-[var(--text-tertiary)]" placeholder="Search…" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
 
         {/* Category pills */}
@@ -65,9 +67,9 @@ export function CoursesPage() {
             ))}
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[13px] text-[#333]">Showing <strong>{filtered.length}</strong> courses</span>
+            <span className="text-[13px] text-[var(--text-secondary)]">Showing <strong className="text-[var(--text-primary)]">{filtered.length}</strong> courses</span>
             <select value={sort} onChange={e => setSort(e.target.value)}
-              className="bg-white border border-[#D0D0D0] rounded-[8px] text-[#111] px-3 py-1.5 text-[12px] outline-none focus:border-[#D4A017]">
+              className="bg-[var(--surface)] border border-[var(--border)] rounded-[8px] text-[var(--text-primary)] px-3 py-1.5 text-[12px] outline-none focus:border-[#D4A017] transition-colors">
               {SORT_OPTIONS.map(o => <option key={o}>{o}</option>)}
             </select>
           </div>
@@ -79,9 +81,9 @@ export function CoursesPage() {
             {filtered.map(c => <CourseCard key={c.id} course={c} />)}
           </div>
         ) : (
-          <div className="text-center py-20 text-[#6B6B6B]">
+          <div className="text-center py-20 text-[var(--text-tertiary)]">
             <div className="text-[48px] mb-4">🔍</div>
-            <div className="text-[16px] font-[600] text-[#333] mb-2">No courses found</div>
+            <div className="text-[16px] font-[600] text-[var(--text-secondary)] mb-2">No courses found</div>
             <p className="text-[13px]">Try a different category or search term</p>
           </div>
         )}

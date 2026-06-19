@@ -46,9 +46,9 @@ export function MyCoursesPage() {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="text-center py-20 text-[#6B6B6B]">
+        <div className="text-center py-20 text-[var(--text-tertiary)]">
           <div className="text-[48px] mb-4">📚</div>
-          <div className="text-[16px] font-[600] text-[#333] mb-2">No courses here</div>
+          <div className="text-[16px] font-[600] text-[var(--text-secondary)] mb-2">No courses here</div>
           <Btn onClick={() => navigate('/courses')}>Browse courses →</Btn>
         </div>
       ) : (
@@ -66,22 +66,22 @@ export function MyCoursesPage() {
               </div>
               <div className="p-4">
                 <div className="flex items-start justify-between gap-2 mb-1">
-                  <h3 className="text-[13px] font-[600] text-[#111] leading-[1.4] flex-1">{course.title}</h3>
+                  <h3 className="text-[13px] font-[600] text-[var(--text-primary)] leading-[1.4] flex-1">{course.title}</h3>
                   {course.progress === 100 && <Badge variant="green">✓ Done</Badge>}
                 </div>
-                <div className="text-[11px] text-[#6B6B6B] mb-3">{course.instructor}</div>
+                <div className="text-[11px] text-[var(--text-tertiary)] mb-3">{course.instructor}</div>
 
                 {/* Progress */}
                 <div className="mb-3">
                   <div className="flex justify-between text-[11px] mb-1.5">
-                    <span className="text-[#6B6B6B]">Progress</span>
+                    <span className="text-[var(--text-tertiary)]">Progress</span>
                     <span className="text-[#D4A017] font-[600]">{course.progress}%</span>
                   </div>
                   <ProgressBar value={course.progress} height={6} />
                 </div>
 
-                <div className="text-[10px] text-[#6B6B6B] mb-3">
-                  Last: <span className="text-[#333] font-[500]">{course.lastLesson}</span>
+                <div className="text-[10px] text-[var(--text-tertiary)] mb-3">
+                  Last: <span className="text-[var(--text-secondary)] font-[500]">{course.lastLesson}</span>
                 </div>
 
                 <div className="flex gap-2">

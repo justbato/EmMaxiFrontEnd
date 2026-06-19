@@ -58,12 +58,12 @@ export function StudentReportPage() {
       <Card className="p-6 max-w-xl">
         <form onSubmit={handleSubmit}>
           <div className="mb-5">
-            <label className="block text-[12px] font-[600] text-[#333] mb-2">Category *</label>
+            <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-2">Category *</label>
             <select
               required
               value={category}
               onChange={e => setCategory(e.target.value)}
-              className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] bg-white transition-colors"
+              className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] bg-[var(--surface)] transition-colors transition-colors"
             >
               <option value="">Select an issue type...</option>
               <option value="course_content">Course Content Issue</option>
@@ -74,37 +74,37 @@ export function StudentReportPage() {
           </div>
 
           <div className="mb-5">
-            <label className="block text-[12px] font-[600] text-[#333] mb-2">Tag Offender (Optional)</label>
+            <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-2">Tag Offender (Optional)</label>
             <input
               type="text"
               value={offender}
               onChange={e => setOffender(e.target.value)}
               placeholder="e.g. @username"
-              className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] bg-white transition-colors"
+              className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] bg-[var(--surface)] transition-colors transition-colors"
             />
           </div>
 
           <div className="mb-5">
-            <label className="block text-[12px] font-[600] text-[#333] mb-2">Description *</label>
+            <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-2">Description *</label>
             <textarea
               required
               rows={6}
               value={description}
               onChange={e => setDescription(e.target.value)}
               placeholder="Please provide details about the issue you are experiencing..."
-              className="w-full px-3 py-2.5 border-[1.5px] border-[#D0D0D0] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] resize-y transition-colors"
+              className="w-full px-3 py-2.5 border-[1.5px] border-[var(--border-2)] rounded-[8px] text-[13px] outline-none focus:border-[#D4A017] resize-y transition-colors"
             />
           </div>
 
           <div className="mb-6">
-            <label className="block text-[12px] font-[600] text-[#333] mb-2">Attachment (Optional)</label>
+            <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-2">Attachment (Optional)</label>
             <div className="flex items-center gap-3">
-              <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 border-[1.5px] border-[#D0D0D0] rounded-[8px] hover:border-[#D4A017] hover:text-[#D4A017] transition-colors text-[13px] font-[500] text-[#333]">
+              <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 border-[1.5px] border-[var(--border-2)] rounded-[8px] hover:border-[#D4A017] hover:text-[#D4A017] transition-colors text-[13px] font-[500] text-[var(--text-secondary)]">
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
                 Choose File
                 <input type="file" className="hidden" onChange={handleFileChange} />
               </label>
-              <span className="text-[12px] text-[#6B6B6B] truncate max-w-[200px]">
+              <span className="text-[12px] text-[var(--text-tertiary)] truncate max-w-[200px]">
                 {fileName || 'No file chosen'}
               </span>
             </div>
@@ -119,26 +119,26 @@ export function StudentReportPage() {
       <div className="max-w-xl mt-8">
         <h3 className="text-[15px] font-[700] mb-4">My Reports</h3>
         {myReports.length === 0 ? (
-          <p className="text-[13px] text-[#6B6B6B]">You haven't submitted any reports yet.</p>
+          <p className="text-[13px] text-[var(--text-tertiary)]">You haven't submitted any reports yet.</p>
         ) : (
           <div className="space-y-3">
             {myReports.map(r => (
-              <Card key={r.id} className="p-4 border border-[#E8E8E8]">
+              <Card key={r.id} className="p-4 border border-[var(--border)]">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-[13px] font-[600] text-[#111] capitalize">{r.type}</span>
-                      <span className={`inline-block px-[8px] py-[2px] rounded-full text-[10px] font-[600] ${r.status === 'pending' ? 'bg-[#FEE2E2] text-[#991B1B]' : r.status === 'processing' ? 'bg-[#FEF3C7] text-[#92400E]' : r.status === 'dismissed' ? 'bg-[#E5E7EB] text-[#374151]' : 'bg-[#D1FAE5] text-[#065F46]'}`}>
+                      <span className="text-[13px] font-[600] text-[var(--text-primary)] capitalize">{r.type}</span>
+                      <span className={`inline-block px-[8px] py-[2px] rounded-full text-[10px] font-[600] ${r.status === 'pending' ? 'bg-[#FEE2E2] dark:bg-[rgba(239,68,68,.12)] text-[#991B1B]' : r.status === 'processing' ? 'bg-[#FEF3C7] dark:bg-[rgba(212,160,23,.15)] text-[#92400E]' : r.status === 'dismissed' ? 'bg-[#E5E7EB] dark:bg-[rgba(255,255,255,.1)] text-[#374151]' : 'bg-[#D1FAE5] dark:bg-[rgba(16,185,129,.15)] text-[#065F46]'}`}>
                         {r.status.charAt(0).toUpperCase() + r.status.slice(1)}
                       </span>
                     </div>
-                    <div className="text-[11px] text-[#6B6B6B] mb-2">
-                      Against: <strong className="text-[#333]">{r.against}</strong> · {r.date}
+                    <div className="text-[11px] text-[var(--text-tertiary)] mb-2">
+                      Against: <strong className="text-[var(--text-secondary)]">{r.against}</strong> · {r.date}
                     </div>
                     {r.feedback && (
-                      <div className="bg-[#FDF6DC] border border-[rgba(212,160,23,.2)] rounded-[8px] p-2.5 mt-2">
+                      <div className="bg-[#FDF6DC] dark:bg-[rgba(212,160,23,.12)] border border-[var(--border)] dark:border-[rgba(212,160,23,.2)] rounded-[8px] p-2.5 mt-2">
                         <div className="text-[10px] font-[700] text-[#D4A017] uppercase tracking-[.06em] mb-1">Admin Feedback</div>
-                        <p className="text-[12px] text-[#333] leading-[1.5]">{r.feedback}</p>
+                        <p className="text-[12px] text-[var(--text-secondary)] leading-[1.5]">{r.feedback}</p>
                       </div>
                     )}
                   </div>

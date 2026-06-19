@@ -3,39 +3,134 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════
+   THEME TOKENS — Light (default values) & Dark (.dark class)
+   ═══════════════════════════════════════════════════════════ */
+
 :root {
+  /* Brand — unchanged in both modes */
   --brand: #D4A017;
   --brand2: #C8920F;
   --brand3: #F0C040;
   --brand-light: #FDF6DC;
-  --dark: #0F172A;
-  --dark2: #1E293B;
-  --surface: #FAFAFA;
-  --surface2: #F3F4F6;
-  --text: #0F172A;
-  --text2: #334155;
-  --text3: #64748B;
-  --border: #E2E8F0;
-  --border2: #CBD5E1;
+  --brand-glow: rgba(212, 160, 23, .15);
+
+  /* Backgrounds */
+  --bg: #FFFFFF;
+  --bg-secondary: #F5F5F5;
+  --bg-tertiary: #F1F3F4;
+  --bg-elevated: #F8F9FA;
+
+  /* Surfaces (cards, panels) */
+  --surface: #FFFFFF;
+  --surface-hover: #F9F9F9;
+  --surface-2: #F3F4F6;
+
+  /* Text */
+  --text-primary: #111111;
+  --text-secondary: #333333;
+  --text-tertiary: #6B6B6B;
+  --text-muted: #9AA0A6;
+
+  /* Borders */
+  --border: #E8E8E8;
+  --border-2: #D0D0D0;
+  --border-3: #DADCE0;
+
+  /* Semantic */
   --green: #10B981;
   --red: #EF4444;
+
+  /* Shadows */
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+  --shadow-gold: 0 4px 20px rgba(212, 160, 23, .25);
+
+  /* Radii */
   --radius: 16px;
   --radius-sm: 8px;
   --radius-lg: 24px;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 10px 40px -10px rgba(0,0,0,0.08);
-  --shadow-gold: 0 4px 20px rgba(212, 160, 23, .25);
+
+  /* Input */
+  --input-bg: #FFFFFF;
+  --input-border: #D0D0D0;
+  --input-focus-ring: rgba(212, 160, 23, .15);
+
+  /* Scrollbar */
+  --scrollbar-track: #F9F9F9;
+  --scrollbar-thumb: #CBD5E1;
+
+  /* Table */
+  --table-hover: #FDFBF3;
+
+  /* Nav / header specifics */
+  --nav-bg: #FFFFFF;
+  --nav-border: #E8E8E8;
 }
+
+.dark {
+  /* Brand adjustments for dark */
+  --brand-light: rgba(212, 160, 23, .12);
+  --brand-glow: rgba(212, 160, 23, .25);
+
+  /* Backgrounds */
+  --bg: #0B0F1A;
+  --bg-secondary: #111827;
+  --bg-tertiary: #1A1F2E;
+  --bg-elevated: #0F1629;
+
+  /* Surfaces */
+  --surface: #151B2B;
+  --surface-hover: #1E2640;
+  --surface-2: #1A2235;
+
+  /* Text */
+  --text-primary: #E2E8F0;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
+  --text-muted: #475569;
+
+  /* Borders */
+  --border: #1E293B;
+  --border-2: #334155;
+  --border-3: #2A3548;
+
+  /* Shadows — deeper for dark mode */
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 10px 40px -10px rgba(0, 0, 0, 0.4);
+  --shadow-gold: 0 4px 20px rgba(212, 160, 23, .20);
+
+  /* Input */
+  --input-bg: #151B2B;
+  --input-border: #334155;
+  --input-focus-ring: rgba(212, 160, 23, .25);
+
+  /* Scrollbar */
+  --scrollbar-track: #111827;
+  --scrollbar-thumb: #334155;
+
+  /* Table */
+  --table-hover: rgba(212, 160, 23, .06);
+
+  /* Nav */
+  --nav-bg: #0D1220;
+  --nav-border: #1E293B;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GLOBAL STYLES
+   ═══════════════════════════════════════════════════════════ */
 
 * {
   box-sizing: border-box;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 html,
 body {
   font-family: 'Satoshi', sans-serif;
-  background: #ffffff;
-  color: var(--text);
+  background: var(--bg);
+  color: var(--text-primary);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -46,11 +141,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f9f9f9;
+  background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: var(--scrollbar-thumb);
   border-radius: 99px;
 }
 
@@ -96,6 +191,11 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
+.dark .glass {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .glass-dark {
   background: rgba(15, 23, 42, 0.8);
   backdrop-filter: blur(12px);
@@ -105,7 +205,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Course card hover */
 .course-card {
-  transition: transform .3s cubic-bezier(.22, 1, .36, 1), box-shadow .3s;
+  transition: transform .3s cubic-bezier(.22, 1, .36, 1), box-shadow .3s, background-color .25s ease, border-color .25s ease;
 }
 
 .course-card:hover {
@@ -182,6 +282,10 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 0;
 }
 
+.dark .hero::before {
+  background: radial-gradient(circle, rgba(212, 160, 23, .08) 0%, rgba(11,15,26,0) 65%);
+}
+
 .hero::after {
   content: '';
   position: absolute;
@@ -195,6 +299,10 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 0;
 }
 
+.dark .hero::after {
+  background: radial-gradient(circle, rgba(212, 160, 23, .04) 0%, rgba(11,15,26,0) 70%);
+}
+
 /* Progress bar */
 .progress-fill {
   background: linear-gradient(90deg, var(--brand), #C8920F);
@@ -202,7 +310,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Table row hover */
 tr:hover td {
-  background: #FDFBF3;
+  background: var(--table-hover);
 }
 
 /* Plan card */
@@ -242,7 +350,7 @@ input[type=range] {
   width: 100%;
   height: 6px;
   border-radius: 99px;
-  background: linear-gradient(90deg, var(--brand) 0%, var(--surface2) 0%);
+  background: linear-gradient(90deg, var(--brand) 0%, var(--surface-2) 0%);
   outline: none;
 }
 
@@ -266,7 +374,7 @@ input[type=range]::-webkit-slider-thumb {
 /* Course builder */
 .cb-editor:empty::before {
   content: attr(data-placeholder);
-  color: var(--text3);
+  color: var(--text-tertiary);
   pointer-events: none;
 }
 
@@ -322,4 +430,44 @@ input[type=range]::-webkit-slider-thumb {
 @keyframes slideRight {
   from { transform: translateX(100%); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   THEME TOGGLE ANIMATION
+   ═══════════════════════════════════════════════════════════ */
+
+.theme-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(.22, 1, .36, 1);
+  color: var(--text-secondary);
+}
+
+.theme-toggle:hover {
+  border-color: var(--brand);
+  background: var(--brand-light);
+  color: var(--brand);
+  transform: scale(1.05);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.4s cubic-bezier(.22, 1, .36, 1), opacity 0.3s ease;
+}
+
+.theme-toggle:hover svg {
+  transform: rotate(30deg);
 }

@@ -79,7 +79,7 @@ export function CourseBuilderPage() {
 
   const handleSubmit = () => { setSubmitOpen(false); showToast('Course submitted for review! ✓'); navigate('/instructor') }
 
-  const inputClass = (err?: string) => `w-full px-3 py-2.5 border-[1.5px] rounded-[8px] text-[13px] outline-none transition-all focus:border-[#D4A017] focus:shadow-[0_0_0_3px_rgba(212,160,23,.15)] ${err ? 'border-[#EF4444]' : 'border-[#D0D0D0]'}`
+  const inputClass = (err?: string) => `w-full px-3 py-2.5 border-[1.5px] rounded-[8px] text-[13px] outline-none transition-all focus:border-[#D4A017] focus:shadow-[0_0_0_3px_rgba(212,160,23,.15)] ${err ? 'border-[#EF4444]' : 'border-[var(--border-2)]'}`
 
   return (
     <DashLayout sidebarItems={NAV} title="Course Builder" subtitle="Create and publish a new course">
@@ -89,10 +89,10 @@ export function CourseBuilderPage() {
           {STEPS.map((s, i) => (
             <div key={s} className="flex items-center flex-shrink-0">
               <div onClick={() => i < step && setStep(i)} className={`flex items-center gap-2 cursor-pointer ${i <= step ? 'opacity-100' : 'opacity-40'}`}>
-                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-[700] transition-all ${i < step ? 'bg-[#10B981] text-white' : i === step ? 'bg-[#D4A017] text-[#111]' : 'bg-[#E8E8E8] text-[#6B6B6B]'}`}>
+                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-[700] transition-all ${i < step ? 'bg-[#10B981] text-white' : i === step ? 'bg-[#D4A017] text-[var(--text-primary)]' : 'bg-[#E8E8E8] text-[var(--text-tertiary)]'}`}>
                   {i < step ? '✓' : i + 1}
                 </div>
-                <span className={`text-[12px] font-[600] hidden sm:block ${i === step ? 'text-[#D4A017]' : 'text-[#6B6B6B]'}`}>{s}</span>
+                <span className={`text-[12px] font-[600] hidden sm:block ${i === step ? 'text-[#D4A017]' : 'text-[var(--text-tertiary)]'}`}>{s}</span>
               </div>
               {i < STEPS.length - 1 && <div className={`w-8 sm:w-16 h-px mx-2 flex-shrink-0 ${i < step ? 'bg-[#10B981]' : 'bg-[#E8E8E8]'}`} />}
             </div>
@@ -103,15 +103,15 @@ export function CourseBuilderPage() {
         {step === 0 && (
           <Card className="p-6">
             <h2 className="text-[15px] font-[700] mb-1">Step 1 — Basic information</h2>
-            <p className="text-[12px] text-[#6B6B6B] mb-5">Fill in the core details that help students find your course.</p>
+            <p className="text-[12px] text-[var(--text-tertiary)] mb-5">Fill in the core details that help students find your course.</p>
             <div className="mb-4">
-              <label className="block text-[12px] font-[600] text-[#333] mb-1">Course title *</label>
+              <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Course title *</label>
               <input value={title} onChange={e => { setTitle(e.target.value); setErrors(p => ({ ...p, title: '' })) }} placeholder="e.g. Advanced React Patterns & Performance" className={inputClass(errors.title)} />
               {errors.title && <p className="text-[11px] text-[#EF4444] mt-1">{errors.title}</p>}
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
-                <label className="block text-[12px] font-[600] text-[#333] mb-1">Category *</label>
+                <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Category *</label>
                 <select value={category} onChange={e => { setCategory(e.target.value); setErrors(p => ({ ...p, category: '' })) }} className={inputClass(errors.category)}>
                   <option value="">Select category</option>
                   {CATEGORIES.map(c => <option key={c}>{c}</option>)}
@@ -119,7 +119,7 @@ export function CourseBuilderPage() {
                 {errors.category && <p className="text-[11px] text-[#EF4444] mt-1">{errors.category}</p>}
               </div>
               <div>
-                <label className="block text-[12px] font-[600] text-[#333] mb-1">Level *</label>
+                <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Level *</label>
                 <select value={level} onChange={e => { setLevel(e.target.value); setErrors(p => ({ ...p, level: '' })) }} className={inputClass(errors.level)}>
                   <option value="">Select level</option>
                   {LEVELS.map(l => <option key={l}>{l}</option>)}
@@ -128,7 +128,7 @@ export function CourseBuilderPage() {
               </div>
             </div>
             <div className="mb-4">
-              <label className="block text-[12px] font-[600] text-[#333] mb-1">Short description * <span className="font-normal text-[#6B6B6B]">(shown in course cards)</span></label>
+              <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Short description * <span className="font-normal text-[var(--text-tertiary)]">(shown in course cards)</span></label>
               <textarea rows={2} value={shortDesc} onChange={e => { setShortDesc(e.target.value); setErrors(p => ({ ...p, shortDesc: '' })) }} placeholder="One or two sentences summarising your course…" className={`${inputClass(errors.shortDesc)} resize-none`} />
               {errors.shortDesc && <p className="text-[11px] text-[#EF4444] mt-1">{errors.shortDesc}</p>}
             </div>
@@ -139,13 +139,13 @@ export function CourseBuilderPage() {
         {step === 1 && (
           <Card className="p-6">
             <h2 className="text-[15px] font-[700] mb-1">Step 2 — Course details</h2>
-            <p className="text-[12px] text-[#6B6B6B] mb-5">Add a full description, learning outcomes, and requirements.</p>
+            <p className="text-[12px] text-[var(--text-tertiary)] mb-5">Add a full description, learning outcomes, and requirements.</p>
             <div className="mb-4">
-              <label className="block text-[12px] font-[600] text-[#333] mb-1">Full description</label>
+              <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Full description</label>
               <textarea rows={5} value={fullDesc} onChange={e => setFullDesc(e.target.value)} placeholder="Describe what students will learn, who it's for, and what makes this course unique…" className={`${inputClass()} resize-y`} />
             </div>
             <div className="mb-4">
-              <label className="block text-[12px] font-[600] text-[#333] mb-2">Learning outcomes <span className="text-[#6B6B6B] font-normal">(what students will be able to do)</span></label>
+              <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-2">Learning outcomes <span className="text-[var(--text-tertiary)] font-normal">(what students will be able to do)</span></label>
               {outcomes.map((o, i) => (
                 <div key={i} className="flex items-center gap-2 mb-2">
                   <span className="text-[#10B981] font-[700] text-[13px] flex-shrink-0">✓</span>
@@ -156,11 +156,11 @@ export function CourseBuilderPage() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-[12px] font-[600] text-[#333] mb-1">Requirements / prerequisites</label>
+                <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Requirements / prerequisites</label>
                 <textarea rows={3} value={requirements} onChange={e => setRequirements(e.target.value)} placeholder="e.g. Basic JavaScript knowledge…" className={`${inputClass()} resize-none`} />
               </div>
               <div>
-                <label className="block text-[12px] font-[600] text-[#333] mb-1">Language</label>
+                <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Language</label>
                 <select value={language} onChange={e => setLanguage(e.target.value)} className={inputClass()}>
                   {['English', 'Yoruba', 'Igbo', 'Hausa', 'Pidgin'].map(l => <option key={l}>{l}</option>)}
                 </select>
@@ -174,55 +174,55 @@ export function CourseBuilderPage() {
           <div className="space-y-4">
             <Card className="p-5">
               <h2 className="text-[15px] font-[700] mb-1">Step 3 — Curriculum</h2>
-              <p className="text-[12px] text-[#6B6B6B]">Organise your course into sections and lessons. Each lesson can be a video, text, or both.</p>
+              <p className="text-[12px] text-[var(--text-tertiary)]">Organise your course into sections and lessons. Each lesson can be a video, text, or both.</p>
             </Card>
             {sections.map((section, si) => (
               <Card key={section.id} className="overflow-hidden">
                 {/* Section header */}
-                <div className="bg-[#F9F9F9] px-4 py-3 flex items-center gap-3 border-b border-[#E8E8E8]">
-                  <span className="text-[11px] font-[700] text-[#6B6B6B]">§{si + 1}</span>
-                  <input value={section.title} onChange={e => updateSection(section.id, e.target.value)} className="flex-1 bg-transparent border-none outline-none text-[13px] font-[600] text-[#111]" />
-                  <button onClick={() => removeSection(section.id)} className="text-[#6B6B6B] hover:text-[#EF4444] transition-colors text-[16px]">✕</button>
+                <div className="bg-[var(--bg-tertiary)] transition-colors px-4 py-3 flex items-center gap-3 border-b border-[var(--border)]">
+                  <span className="text-[11px] font-[700] text-[var(--text-tertiary)]">§{si + 1}</span>
+                  <input value={section.title} onChange={e => updateSection(section.id, e.target.value)} className="flex-1 bg-transparent border-none outline-none text-[13px] font-[600] text-[var(--text-primary)]" />
+                  <button onClick={() => removeSection(section.id)} className="text-[var(--text-tertiary)] hover:text-[#EF4444] transition-colors text-[16px]">✕</button>
                 </div>
                 {/* Lessons */}
                 <div className="divide-y divide-[#E8E8E8]">
                   {section.lessons.map((lesson, li) => (
                     <div key={lesson.id} className="p-4">
                       <div className="flex items-center gap-2 mb-3">
-                        <div className="w-6 h-6 rounded-full bg-[#D4A017] text-[#111] text-[10px] font-[700] flex items-center justify-center flex-shrink-0">{li + 1}</div>
-                        <input value={lesson.title} onChange={e => updateLesson(section.id, lesson.id, 'title', e.target.value)} placeholder="Lesson title…" className="flex-1 px-2.5 py-1.5 border-[1.5px] border-[#D0D0D0] rounded-[6px] text-[12px] outline-none focus:border-[#D4A017]" />
-                        <button onClick={() => removeLesson(section.id, lesson.id)} className="text-[#6B6B6B] hover:text-[#EF4444] transition-colors">✕</button>
+                        <div className="w-6 h-6 rounded-full bg-[#D4A017] text-[var(--text-primary)] text-[10px] font-[700] flex items-center justify-center flex-shrink-0">{li + 1}</div>
+                        <input value={lesson.title} onChange={e => updateLesson(section.id, lesson.id, 'title', e.target.value)} placeholder="Lesson title…" className="flex-1 px-2.5 py-1.5 border-[1.5px] border-[var(--border-2)] rounded-[6px] text-[12px] outline-none focus:border-[#D4A017]" />
+                        <button onClick={() => removeLesson(section.id, lesson.id)} className="text-[var(--text-tertiary)] hover:text-[#EF4444] transition-colors">✕</button>
                       </div>
                       {/* Type picker */}
                       <div className="flex gap-2 mb-3">
                         {(['video', 'text', 'both'] as const).map(type => (
                           <button key={type} onClick={() => updateLesson(section.id, lesson.id, 'type', type)}
-                            className={`px-3 py-1 rounded-full text-[11px] font-[600] border-[1.5px] transition-all ${lesson.type === type ? 'border-[#D4A017] bg-[#D4A017] text-[#111]' : 'border-[#D0D0D0] bg-white text-[#333] hover:border-[#D4A017]'}`}>
+                            className={`px-3 py-1 rounded-full text-[11px] font-[600] border-[1.5px] transition-all ${lesson.type === type ? 'border-[#D4A017] bg-[#D4A017] text-[var(--text-primary)]' : 'border-[var(--border-2)] bg-[var(--surface)] transition-colors text-[var(--text-secondary)] hover:border-[#D4A017]'}`}>
                             {type === 'video' ? '📺 Video' : type === 'text' ? '📝 Text' : '⚡ Both'}
                           </button>
                         ))}
                       </div>
                       {(lesson.type === 'video' || lesson.type === 'both') && (
                         <div className="mb-3">
-                          <label className="text-[11px] text-[#6B6B6B] font-[600] block mb-1">YouTube video URL</label>
-                          <input value={lesson.ytUrl} onChange={e => updateLesson(section.id, lesson.id, 'ytUrl', e.target.value)} placeholder="https://www.youtube.com/watch?v=…" className="w-full px-3 py-2 border-[1.5px] border-[#D0D0D0] rounded-[6px] text-[12px] outline-none focus:border-[#D4A017]" />
+                          <label className="text-[11px] text-[var(--text-tertiary)] font-[600] block mb-1">YouTube video URL</label>
+                          <input value={lesson.ytUrl} onChange={e => updateLesson(section.id, lesson.id, 'ytUrl', e.target.value)} placeholder="https://www.youtube.com/watch?v=…" className="w-full px-3 py-2 border-[1.5px] border-[var(--border-2)] rounded-[6px] text-[12px] outline-none focus:border-[#D4A017]" />
                         </div>
                       )}
                       {(lesson.type === 'text' || lesson.type === 'both') && (
                         <div>
-                          <label className="text-[11px] text-[#6B6B6B] font-[600] block mb-1">Lesson text content</label>
-                          <textarea rows={3} value={lesson.content} onChange={e => updateLesson(section.id, lesson.id, 'content', e.target.value)} placeholder="Write your lesson content here…" className="w-full px-3 py-2 border-[1.5px] border-[#D0D0D0] rounded-[6px] text-[12px] outline-none focus:border-[#D4A017] resize-y" />
+                          <label className="text-[11px] text-[var(--text-tertiary)] font-[600] block mb-1">Lesson text content</label>
+                          <textarea rows={3} value={lesson.content} onChange={e => updateLesson(section.id, lesson.id, 'content', e.target.value)} placeholder="Write your lesson content here…" className="w-full px-3 py-2 border-[1.5px] border-[var(--border-2)] rounded-[6px] text-[12px] outline-none focus:border-[#D4A017] resize-y" />
                         </div>
                       )}
                     </div>
                   ))}
                 </div>
-                <div className="p-4 border-t border-[#E8E8E8]">
+                <div className="p-4 border-t border-[var(--border)]">
                   <button onClick={() => addLesson(section.id)} className="text-[12px] text-[#D4A017] font-[600] hover:opacity-70 transition-opacity">+ Add lesson</button>
                 </div>
               </Card>
             ))}
-            <button onClick={addSection} className="w-full py-3 border-[1.5px] border-dashed border-[#D0D0D0] rounded-[14px] text-[13px] font-[500] text-[#6B6B6B] hover:border-[#D4A017] hover:text-[#D4A017] transition-all">
+            <button onClick={addSection} className="w-full py-3 border-[1.5px] border-dashed border-[var(--border-2)] rounded-[14px] text-[13px] font-[500] text-[var(--text-tertiary)] hover:border-[#D4A017] hover:text-[#D4A017] transition-all">
               + Add new section
             </button>
           </div>
@@ -232,7 +232,7 @@ export function CourseBuilderPage() {
         {step === 3 && (
           <Card className="p-6">
             <h2 className="text-[15px] font-[700] mb-1">Step 4 — Pricing</h2>
-            <p className="text-[12px] text-[#6B6B6B] mb-5">Set your course price. You earn <strong className="text-[#10B981]">80%</strong> of every sale — EmMaxi retains 20%.</p>
+            <p className="text-[12px] text-[var(--text-tertiary)] mb-5">Set your course price. You earn <strong className="text-[#10B981]">80%</strong> of every sale — EmMaxi retains 20%.</p>
             <div className="grid grid-cols-3 gap-3 mb-5">
               {[
                 { key: 'paid', icon: '💳', label: 'One-time payment' },
@@ -240,30 +240,30 @@ export function CourseBuilderPage() {
                 { key: 'free', icon: '🆓', label: 'Free' },
               ].map(p => (
                 <div key={p.key} onClick={() => setPriceType(p.key as any)}
-                  className={`border-[2px] rounded-[8px] p-4 text-center cursor-pointer transition-all ${priceType === p.key ? 'border-[#D4A017] bg-[#FDF6DC]' : 'border-[#D0D0D0] hover:border-[#D4A017]'}`}>
+                  className={`border-[2px] rounded-[8px] p-4 text-center cursor-pointer transition-all ${priceType === p.key ? 'border-[#D4A017] bg-[#FDF6DC] dark:bg-[rgba(212,160,23,.12)]' : 'border-[var(--border-2)] hover:border-[#D4A017]'}`}>
                   <div className="text-[20px] mb-1">{p.icon}</div>
-                  <div className={`text-[12px] font-[600] ${priceType === p.key ? 'text-[#D4A017]' : 'text-[#333]'}`}>{p.label}</div>
+                  <div className={`text-[12px] font-[600] ${priceType === p.key ? 'text-[#D4A017]' : 'text-[var(--text-secondary)]'}`}>{p.label}</div>
                 </div>
               ))}
             </div>
             {priceType !== 'free' && (
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-[12px] font-[600] text-[#333] mb-1">Price (₦) *</label>
+                  <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Price (₦) *</label>
                   <input type="number" value={price} onChange={e => setPrice(e.target.value)} placeholder="e.g. 12000" className={inputClass()} />
                 </div>
                 <div>
-                  <label className="block text-[12px] font-[600] text-[#333] mb-1">Discounted price (optional)</label>
+                  <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Discounted price (optional)</label>
                   <input type="number" value={discountPrice} onChange={e => setDiscountPrice(e.target.value)} placeholder="e.g. 8000" className={inputClass()} />
                 </div>
               </div>
             )}
             <div>
-              <label className="block text-[12px] font-[600] text-[#333] mb-1">Coupon code (optional)</label>
+              <label className="block text-[12px] font-[600] text-[var(--text-secondary)] mb-1">Coupon code (optional)</label>
               <input value={coupon} onChange={e => setCoupon(e.target.value)} placeholder="e.g. LAUNCH50 for 50% off" className={inputClass()} />
             </div>
             {priceType !== 'free' && price && (
-              <div className="mt-4 p-4 bg-[#D1FAE5] border border-[#86EFAC] rounded-[10px]">
+              <div className="mt-4 p-4 bg-[#D1FAE5] dark:bg-[rgba(16,185,129,.15)] border border-[#86EFAC] rounded-[10px]">
                 <div className="text-[12px] text-[#065F46]">
                   💰 At ₦{parseInt(price).toLocaleString()}, you earn <strong>₦{Math.round(parseInt(price) * 0.8).toLocaleString()}</strong> per sale
                 </div>
@@ -277,10 +277,10 @@ export function CourseBuilderPage() {
           <Card className="p-6 text-center">
             <div className="text-[48px] mb-4">🚀</div>
             <h2 className="text-[20px] font-[700] mb-2" style={{ fontFamily: 'Clash Display, sans-serif' }}>Ready to submit?</h2>
-            <p className="text-[13px] text-[#6B6B6B] mb-6 leading-[1.7]">
-              Your course <strong className="text-[#111]">"{title || 'Untitled Course'}"</strong> will be reviewed by the EmMaxi team within 2–3 business days.
+            <p className="text-[13px] text-[var(--text-tertiary)] mb-6 leading-[1.7]">
+              Your course <strong className="text-[var(--text-primary)]">"{title || 'Untitled Course'}"</strong> will be reviewed by the EmMaxi team within 2–3 business days.
             </p>
-            <div className="bg-[#FDF6DC] border border-[rgba(212,160,23,.2)] rounded-[12px] p-4 mb-6 text-left space-y-1.5">
+            <div className="bg-[#FDF6DC] dark:bg-[rgba(212,160,23,.12)] border border-[var(--border)] dark:border-[rgba(212,160,23,.2)] rounded-[12px] p-4 mb-6 text-left space-y-1.5">
               <div className="text-[12px] text-[#7A5A00] flex items-center gap-2"><span>✓</span> Course content will be reviewed for quality</div>
               <div className="text-[12px] text-[#7A5A00] flex items-center gap-2"><span>✓</span> Pricing and descriptions will be verified</div>
               <div className="text-[12px] text-[#7A5A00] flex items-center gap-2"><span>✓</span> You can edit the course while in review</div>

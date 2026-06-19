@@ -72,22 +72,22 @@ export function InstructorQAPage() {
                   <span className="text-[13px] font-[600]">{q.student}</span>
                   <span className="text-[11px] text-[#D4A017]">{q.handle}</span>
                   <Badge variant={q.answered ? 'green' : 'amber'}>{q.answered ? '✓ Answered' : 'Pending'}</Badge>
-                  <span className="text-[11px] text-[#6B6B6B]">· {q.time}</span>
+                  <span className="text-[11px] text-[var(--text-tertiary)]">· {q.time}</span>
                 </div>
-                <div className="text-[11px] text-[#6B6B6B] mb-2">
+                <div className="text-[11px] text-[var(--text-tertiary)] mb-2">
                   <span className="text-[#D4A017] font-[500]">{q.course}</span> · {q.lesson}
                 </div>
-                <p className="text-[13px] leading-[1.65] text-[#333] mb-3">{q.text}</p>
+                <p className="text-[13px] leading-[1.65] text-[var(--text-secondary)] mb-3">{q.text}</p>
 
                 {q.answered && q.reply && (
-                  <div className="bg-[#FDF6DC] border border-[rgba(212,160,23,.2)] rounded-[8px] p-3 mb-3">
+                  <div className="bg-[#FDF6DC] dark:bg-[rgba(212,160,23,.12)] border border-[var(--border)] dark:border-[rgba(212,160,23,.2)] rounded-[8px] p-3 mb-3">
                     <div className="text-[10px] font-[700] text-[#D4A017] uppercase tracking-[.06em] mb-1.5">✓ Your reply</div>
-                    <p className="text-[12px] text-[#333] leading-[1.65]">{q.reply}</p>
+                    <p className="text-[12px] text-[var(--text-secondary)] leading-[1.65]">{q.reply}</p>
                   </div>
                 )}
 
                 <div className="flex items-center gap-3">
-                  <span className="text-[11px] text-[#6B6B6B]">👍 {q.upvotes} upvotes</span>
+                  <span className="text-[11px] text-[var(--text-tertiary)]">👍 {q.upvotes} upvotes</span>
                   <Btn size="sm" variant={q.answered ? 'outline' : 'primary'} onClick={() => openReply(q.id, q.student)}>
                     {q.answered ? 'Edit reply' : 'Reply →'}
                   </Btn>
@@ -99,9 +99,9 @@ export function InstructorQAPage() {
         ))}
 
         {filtered.length === 0 && (
-          <div className="text-center py-16 text-[#6B6B6B]">
+          <div className="text-center py-16 text-[var(--text-tertiary)]">
             <div className="text-[48px] mb-3">💬</div>
-            <div className="text-[14px] font-[600] text-[#333] mb-1">No questions here</div>
+            <div className="text-[14px] font-[600] text-[var(--text-secondary)] mb-1">No questions here</div>
             <p className="text-[12px]">All caught up!</p>
           </div>
         )}

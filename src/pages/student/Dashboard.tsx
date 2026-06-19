@@ -48,9 +48,9 @@ export function StudentDashboard() {
         {/* Left col */}
         <div>
           {/* Continue learning */}
-          <Card className="p-5 mb-5">
+          <Card className="p-5 mb-5 transition-colors">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-[15px] font-[700]">Continue learning</h2>
+              <h2 className="text-[15px] font-[700] text-[var(--text-primary)]">Continue learning</h2>
               <button onClick={() => navigate('/student/courses')} className="text-[12px] text-[#D4A017] font-[600]">View all →</button>
             </div>
             <div className="flex gap-4 flex-wrap items-center mb-4">
@@ -60,12 +60,12 @@ export function StudentDashboard() {
             </div>
             <div className="space-y-3">
               {filtered.map(course => (
-                <div key={course.id} className="flex items-center gap-4 p-4 rounded-[12px] border border-[#E8E8E8] hover:border-[#D4A017] hover:bg-[#FFFDF7] transition-all cursor-pointer group"
+                <div key={course.id} className="flex items-center gap-4 p-4 rounded-[12px] border border-[var(--border)] hover:border-[#D4A017] hover:bg-[var(--surface-hover)] transition-all cursor-pointer group"
                   onClick={() => navigate(`/learn/${course.id}`)}>
                   <div className="w-12 h-12 rounded-[10px] flex items-center justify-center text-[24px] flex-shrink-0" style={{ background: course.gradient }}>{course.emoji}</div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-[13px] font-[600] text-[#111] truncate">{course.title}</div>
-                    <div className="text-[11px] text-[#6B6B6B] mt-0.5 truncate">Last: {course.lastLesson}</div>
+                    <div className="text-[13px] font-[600] text-[var(--text-primary)] truncate">{course.title}</div>
+                    <div className="text-[11px] text-[var(--text-secondary)] mt-0.5 truncate">Last: {course.lastLesson}</div>
                     <div className="mt-2 flex items-center gap-2">
                       <ProgressBar value={course.progress} className="flex-1" />
                       <span className="text-[11px] font-[600] text-[#D4A017] flex-shrink-0">{course.progress}%</span>
@@ -84,20 +84,20 @@ export function StudentDashboard() {
           </Card>
 
           {/* Weekly goal */}
-          <Card className="p-5 mb-5">
-            <h2 className="text-[15px] font-[700] mb-4">📅 Weekly learning goal</h2>
+          <Card className="p-5 mb-5 transition-colors">
+            <h2 className="text-[15px] font-[700] text-[var(--text-primary)] mb-4">📅 Weekly learning goal</h2>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[13px] text-[#333]">5 hours / week</span>
+              <span className="text-[13px] text-[var(--text-secondary)]">5 hours / week</span>
               <span className="text-[13px] font-[600] text-[#D4A017]">3.5h done</span>
             </div>
             <ProgressBar value={70} className="mb-3" height={8} />
             <div className="grid grid-cols-7 gap-1.5 mt-4">
               {['M','T','W','T','F','S','S'].map((d, i) => (
                 <div key={i} className="text-center">
-                  <div className={`w-8 h-8 mx-auto rounded-full flex items-center justify-center text-[10px] font-[600] mb-1 ${i < 4 ? 'bg-[#D4A017] text-[#111]' : i === 4 ? 'bg-[#FDF6DC] border-2 border-[#D4A017] text-[#D4A017]' : 'bg-[#F5F5F5] text-[#6B6B6B]'}`}>
+                  <div className={`w-8 h-8 mx-auto rounded-full flex items-center justify-center text-[10px] font-[600] mb-1 transition-colors ${i < 4 ? 'bg-[#D4A017] text-[var(--text-primary)]' : i === 4 ? 'bg-[var(--brand-light)] border-2 border-[#D4A017] text-[#D4A017]' : 'bg-[var(--bg-secondary)] text-[var(--text-tertiary)]'}`}>
                     {i < 4 ? '✓' : i === 4 ? '→' : '·'}
                   </div>
-                  <div className="text-[10px] text-[#6B6B6B]">{d}</div>
+                  <div className="text-[10px] text-[var(--text-secondary)]">{d}</div>
                 </div>
               ))}
             </div>
@@ -107,25 +107,25 @@ export function StudentDashboard() {
         {/* Right col */}
         <div>
           {/* Certificate */}
-          <Card className="p-5 mb-5 bg-gradient-to-br from-[#FDF6DC] to-[#FFF5CC] border-[rgba(212,160,23,.3)]">
+          <Card className="p-5 mb-5 bg-[var(--brand-light)] border-[var(--border)] transition-colors">
             <div className="flex items-center gap-2 mb-3">
               <span className="text-[20px]">🎓</span>
-              <h3 className="text-[14px] font-[700]">Certificate earned!</h3>
+              <h3 className="text-[14px] font-[700] text-[var(--text-primary)]">Certificate earned!</h3>
             </div>
-            <p className="text-[12px] text-[#7A5A00] mb-3 leading-[1.6]">You completed <strong>UI/UX Fundamentals</strong>. Your certificate is ready to share.</p>
+            <p className="text-[12px] text-[#D4A017] mb-3 leading-[1.6]">You completed <strong className="text-[var(--text-primary)]">UI/UX Fundamentals</strong>. Your certificate is ready to share.</p>
             <Btn size="sm" className="w-full justify-center" onClick={() => setCertOpen(true)}>View certificate →</Btn>
           </Card>
 
           {/* Recommended */}
-          <Card className="p-5">
-            <h3 className="text-[14px] font-[700] mb-4">✨ Recommended for you</h3>
+          <Card className="p-5 transition-colors">
+            <h3 className="text-[14px] font-[700] text-[var(--text-primary)] mb-4">✨ Recommended for you</h3>
             <div className="space-y-3">
               {DEMO_COURSES.slice(3, 6).map(c => (
                 <div key={c.id} className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate(`/courses/${c.id}`)}>
                   <div className="w-10 h-10 rounded-[8px] flex items-center justify-center text-[20px] flex-shrink-0" style={{ background: c.gradient }}>{c.emoji}</div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-[12px] font-[600] text-[#111] truncate group-hover:text-[#D4A017] transition-colors">{c.title}</div>
-                    <div className="text-[10px] text-[#6B6B6B]">{c.instructor} · ₦{c.price.toLocaleString()}</div>
+                    <div className="text-[12px] font-[600] text-[var(--text-primary)] truncate group-hover:text-[#D4A017] transition-colors">{c.title}</div>
+                    <div className="text-[10px] text-[var(--text-secondary)]">{c.instructor} · ₦{c.price.toLocaleString()}</div>
                   </div>
                 </div>
               ))}
