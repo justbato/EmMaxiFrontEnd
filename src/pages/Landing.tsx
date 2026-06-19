@@ -6,20 +6,46 @@ import { DEMO_COURSES } from '../types'
 
 type Tab = 'learner' | 'instructor'
 
-// Derive top 5 categories by total student count from real course data
-function getTopCategories(courses: typeof DEMO_COURSES, limit = 5) {
-  const map = new Map<string, { students: number; count: number }>()
-  courses.filter(c => c.status === 'published').forEach(c => {
-    const existing = map.get(c.category) ?? { students: 0, count: 0 }
-    map.set(c.category, { students: existing.students + c.students, count: existing.count + 1 })
-  })
-  return Array.from(map.entries())
-    .sort((a, b) => b[1].students - a[1].students)
-    .slice(0, limit)
-    .map(([category, data]) => ({ category, ...data }))
-}
+// Real categories from the Courses page
+const COURSE_CATEGORIES = [
+  { label: 'Web Dev',      icon: '💻', desc: 'React, Node.js, full-stack' },
+  { label: 'Data Science', icon: '📊', desc: 'Python, ML, analytics' },
+  { label: 'Design',       icon: '🎨', desc: 'UI/UX, Figma, branding' },
+  { label: 'Cloud',        icon: '☁️',  desc: 'AWS, DevOps, architecture' },
+  { label: 'Mobile',       icon: '📱', desc: 'Flutter, React Native' },
+  { label: 'Security',     icon: '🔐', desc: 'Ethical hacking, networking' },
+  { label: 'Business',     icon: '📈', desc: 'Marketing, finance, strategy' },
+]
 
-// Compute live stats from course data
+const INSTRUCTOR_TOOLS = [
+  { title: 'Course Builder',        desc: 'Structure your knowledge into sections and lessons. Add quizzes and publish when you are ready.',   label: 'Platform tool', icon: '🛠️' },
+  { title: 'Revenue Dashboard',     desc: 'See your earnings in real time. Monthly payouts go directly to your bank account.',                   label: 'Platform tool', icon: '💰' },
+  { title: 'Student Analytics',     desc: 'Understand who your students are, where they drop off, and how to improve completion rates.',          label: 'Platform tool', icon: '📊' },
+  { title: 'Certificate Generator', desc: 'Students receive verified certificates automatically. Shareable on LinkedIn with one click.',          label: 'Platform tool', icon: '🏆' },
+  { title: 'Multi-Currency Pricing',desc: 'Set prices in any currency. EmMaxi handles conversion and local payment methods for you.',            label: 'Platform tool', icon: '💱' },
+  { title: 'Promo & Discounts',     desc: 'Create coupon codes and limited-time offers to grow enrolment and reward loyal students.',             label: 'Platform tool', icon: '🎁' },
+]
+
+const LEARNER_HIGHLIGHTS = [
+  { icon: '🎓', title: 'Expert-led courses', desc: 'Learn from vetted instructors with real-world experience in every field.' },
+  { icon: '📜', title: 'Verified certificates', desc: 'Earn certificates you can share directly on LinkedIn with a single click.' },
+  { icon: '⚡', title: 'Learn at your pace', desc: 'Lifetime access. Watch on any device, online or offline, whenever you choose.' },
+  { icon: '💬', title: 'Community & Q&A', desc: 'Join live discussions, get answers from instructors, and grow your network.' },
+]
+
+const INSTRUCTOR_HIGHLIGHTS = [
+  { icon: '🚀', title: 'Publish in minutes', desc: 'Our builder turns your YouTube videos into a structured course instantly.' },
+  { icon: '💸', title: '80% revenue share', desc: 'Keep the majority of every sale. Monthly payouts, no hidden fees.' },
+  { icon: '🌍', title: 'Global reach', desc: 'Reach learners across Africa and beyond with multi-currency support.' },
+  { icon: '📈', title: 'Deep analytics', desc: "Track every student's progress, identify drop-off points, and improve fast." },
+]
+
+const testimonials = [
+  { name: 'Ada Obi',       role: 'Student',    text: 'I completed three courses in two months. The certificate helped me land a junior developer role.', rating: 5, avatar: 'AO', color: '#D4A017' },
+  { name: 'James Okafor', role: 'Instructor',  text: 'EmMaxi made it easy to launch my Python course. The platform handles everything so I can focus on teaching.', rating: 5, avatar: 'JO', color: '#10B981' },
+  { name: 'Lena Müller',  role: 'Instructor',  text: 'My UI/UX course has 940 students. I did not have to deal with any platform setup — I just built and launched.', rating: 5, avatar: 'LM', color: '#6366F1' },
+]
+
 function getStats(courses: typeof DEMO_COURSES) {
   const published = courses.filter(c => c.status === 'published')
   const totalStudents = published.reduce((sum, c) => sum + c.students, 0)
@@ -32,37 +58,13 @@ function getStats(courses: typeof DEMO_COURSES) {
   }
 }
 
-const INSTRUCTOR_TOOLS = [
-  { title: 'Course Builder', desc: 'Structure your knowledge into sections and lessons. Add quizzes and publish when you are ready.', label: 'Platform tool' },
-  { title: 'Revenue Dashboard', desc: 'See your earnings in real time. Monthly payouts go directly to your bank account.', label: 'Platform tool' },
-  { title: 'Student Analytics', desc: 'Understand who your students are, where they drop off, and how to improve completion rates.', label: 'Platform tool' },
-  { title: 'Certificate Generator', desc: 'Students receive verified certificates automatically. Shareable on LinkedIn with one click.', label: 'Platform tool' },
-  { title: 'Multi-Currency Pricing', desc: 'Set prices in any currency. EmMaxi handles conversion and local payment methods for you.', label: 'Platform tool' },
-  { title: 'Promo & Discounts', desc: 'Create coupon codes and limited-time offers to grow enrolment and reward loyal students.', label: 'Platform tool' },
-]
-
-const testimonials = [
-  { name: 'Ada Obi', role: 'Student', text: 'I completed three courses in two months. The certificate helped me land a junior developer role.', rating: 5, avatar: 'AO', color: '#D4A017' },
-  { name: 'James Okafor', role: 'Instructor', text: 'EmMaxi made it easy to launch my Python course. The platform handles everything so I can focus on teaching.', rating: 5, avatar: 'JO', color: '#10B981' },
-  { name: 'Lena Müller', role: 'Instructor', text: 'My UI/UX course has 940 students. I did not have to deal with any platform setup — I just built and launched.', rating: 5, avatar: 'LM', color: '#6366F1' },
-]
-
 export function LandingPage() {
   const navigate = useNavigate()
   const observerRef = useRef<IntersectionObserver | null>(null)
   const [activeTab, setActiveTab] = useState<Tab>('learner')
-  const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  // Derived from real course data
-  const topCategories = getTopCategories(DEMO_COURSES)
   const stats = getStats(DEMO_COURSES)
-
-  // Published courses filtered by selected category
-  const publishedCourses = DEMO_COURSES.filter(c => c.status === 'published')
-  const filteredCourses = activeCategory
-    ? publishedCourses.filter(c => c.category === activeCategory)
-    : publishedCourses.slice(0, 3)
 
   const connectObserver = () => {
     if (observerRef.current) observerRef.current.disconnect()
@@ -80,17 +82,10 @@ export function LandingPage() {
   useEffect(() => {
     connectObserver()
     return () => observerRef.current?.disconnect()
-  }, [activeTab, activeCategory])
+  }, [activeTab])
 
   const handleTabSwitch = (tab: Tab) => {
     setActiveTab(tab)
-    setActiveCategory(null)
-  }
-
-  const handleCategoryClick = (category: string) => {
-    setActiveCategory(prev => prev === category ? null : category)
-    // Navigate to courses page with category filter
-    navigate(`/courses?category=${encodeURIComponent(category)}`)
   }
 
   return (
@@ -104,7 +99,7 @@ export function LandingPage() {
         .scale-in  { opacity: 0; transform: scale(.93);        transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1); }
         .fade-up.visible, .fade-left.visible, .fade-right.visible, .scale-in.visible { opacity: 1; transform: none; }
 
-        /* ── Stagger delays for card grids ── */
+        /* ── Stagger delays ── */
         .stagger-1 { transition-delay: .08s !important; }
         .stagger-2 { transition-delay: .16s !important; }
         .stagger-3 { transition-delay: .24s !important; }
@@ -112,17 +107,93 @@ export function LandingPage() {
         .stagger-5 { transition-delay: .40s !important; }
         .stagger-6 { transition-delay: .48s !important; }
 
-        /* ── Stat number count-up pop ── */
+        /* ── Stat pop ── */
         @keyframes popIn { 0%{transform:scale(.7);opacity:0} 70%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
         .stat-pop { opacity: 0; }
         .stat-pop.visible { animation: popIn .55s cubic-bezier(.22,1,.36,1) forwards; }
 
-        /* ── Nav link underline slide ── */
+        /* ── Nav underline ── */
         .nav-link { position: relative; }
         .nav-link::after { content:''; position:absolute; left:0; bottom:-2px; width:0; height:2px; background:#D4A017; transition:width .25s ease; border-radius:2px; }
         .nav-link:hover::after { width:100%; }
 
-        /* ── Card hover lift ── */
+        /* ── Classic segmented tab control ── */
+        .seg-control {
+          display: inline-flex;
+          background: var(--surface);
+          border: 1.5px solid var(--border-2);
+          border-radius: 10px;
+          padding: 3px;
+          gap: 2px;
+          box-shadow: 0 1px 4px rgba(0,0,0,.06);
+        }
+        .seg-btn {
+          position: relative;
+          font-size: 14px;
+          font-weight: 600;
+          padding: 10px 28px;
+          border-radius: 7px;
+          border: none;
+          cursor: pointer;
+          background: transparent;
+          color: var(--text-tertiary);
+          letter-spacing: .01em;
+          transition: color .2s ease, background .2s ease, box-shadow .2s ease;
+          white-space: nowrap;
+          z-index: 1;
+        }
+        .seg-btn.active {
+          background: #D4A017;
+          color: #fff;
+          box-shadow: 0 2px 8px rgba(212,160,23,.35);
+        }
+        .seg-btn:not(.active):hover {
+          color: var(--text-primary);
+          background: var(--bg-tertiary);
+        }
+
+        /* ── Category cards ── */
+        .cat-card {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 6px;
+          padding: 16px 18px;
+          border: 1.5px solid var(--border);
+          border-radius: 12px;
+          background: var(--surface);
+          cursor: pointer;
+          transition: border-color .2s, box-shadow .2s, transform .2s, background .2s;
+        }
+        .cat-card:hover {
+          border-color: #D4A017;
+          box-shadow: 0 4px 16px rgba(212,160,23,.14);
+          transform: translateY(-3px);
+          background: var(--brand-light);
+        }
+        .cat-icon { font-size: 22px; line-height: 1; }
+        .cat-label { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+        .cat-desc  { font-size: 11px; color: var(--text-tertiary); line-height: 1.4; }
+
+        /* ── Highlight cards (what you get) ── */
+        .highlight-card {
+          display: flex;
+          align-items: flex-start;
+          gap: 14px;
+          padding: 20px 22px;
+          border: 1.5px solid var(--border);
+          border-radius: 12px;
+          background: var(--surface);
+          transition: border-color .25s, box-shadow .25s, transform .25s, background .25s;
+        }
+        .highlight-card:hover {
+          border-color: #D4A017;
+          box-shadow: 0 6px 24px rgba(212,160,23,.12);
+          transform: translateY(-3px);
+        }
+        .highlight-icon { font-size: 26px; flex-shrink: 0; margin-top: 1px; }
+
+        /* ── Course card ── */
         .course-card-g { border: 1.5px solid var(--border); border-radius: 12px; padding: 28px; background: var(--surface); display: flex; flex-direction: column; gap: 10px; transition: box-shadow .25s ease, border-color .25s ease, transform .25s ease, background-color .25s ease; cursor: pointer; }
         .course-card-g:hover { box-shadow: 0 8px 28px rgba(212,160,23,0.13); border-color: #D4A017; transform: translateY(-4px); }
         .course-card-g .label { font-size: 12px; font-weight: 600; color: #D4A017; text-transform: uppercase; letter-spacing: .06em; }
@@ -131,45 +202,42 @@ export function LandingPage() {
         .arrow-link { font-size: 14px; font-weight: 600; color: #D4A017; display: flex; align-items: center; gap: 4px; margin-top: 4px; transition: gap .2s; }
         .course-card-g:hover .arrow-link { gap: 8px; }
 
-        /* ── Story card hover ── */
+        /* ── Story card ── */
         .story-card { border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface); transition: box-shadow .25s ease, transform .25s ease, background-color .25s ease; }
         .story-card:hover { box-shadow: 0 8px 28px rgba(212,160,23,0.10); transform: translateY(-4px); }
 
-        /* ── Pills ── */
-        .goal-pill { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--border-2); font-size: 14px; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: background .15s, border-color .2s, color .15s, transform .15s; white-space: nowrap; background: var(--surface); }
-        .goal-pill:hover { border-color: #D4A017; color: #D4A017; background: var(--brand-light); transform: scale(1.03); }
-        .goal-pill.active { background: #D4A017; border-color: #D4A017; color: #fff; }
-
-        /* ── Tab buttons ── */
-        .tab-btn { font-size: 15px; font-weight: 600; padding: 10px 28px; border-radius: 999px; border: 2px solid transparent; cursor: pointer; transition: all .2s ease; }
-        .tab-btn.active { background: #D4A017; color: #fff; }
-        .tab-btn:not(.active) { background: var(--bg-tertiary); color: var(--text-secondary); }
-        .tab-btn:not(.active):hover { background: var(--border); }
+        /* ── CTA panel that appears under tab ── */
+        .tab-detail-panel {
+          width: 100%;
+          animation: panelFade .35s cubic-bezier(.22,1,.36,1) both;
+        }
+        @keyframes panelFade {
+          from { opacity: 0; transform: translateY(12px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
 
         /* ── Misc ── */
         .landing-divider { height: 1px; background: var(--border); margin: 0; border: none; }
         .stat-block { text-align: center; }
         .stat-block .num { font-size: 36px; font-weight: 700; color: var(--text-primary); line-height: 1.1; }
         .stat-block .lbl { font-size: 14px; color: var(--text-secondary); margin-top: 4px; font-weight: 500; }
-        .pills-scroll { display: flex; flex-wrap: wrap; gap: 10px; }
-        @media (max-width: 640px) {
-          .pills-scroll { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-          .pills-scroll::-webkit-scrollbar { display: none; }
-        }
+
         @media (prefers-reduced-motion: reduce) {
           .fade-up, .fade-left, .fade-right, .scale-in, .stat-pop { opacity: 1 !important; transform: none !important; animation: none !important; }
         }
+
+        /* ── Dark-mode input text fix ── */
+        .dark input::placeholder, .dark textarea::placeholder { color: var(--text-tertiary); opacity: 1; }
+        .dark input, .dark textarea, .dark select { color: var(--text-primary) !important; }
       `}</style>
 
-      {/* Nav */}
+      {/* ── Nav ── */}
       <nav style={{ borderBottom: '1px solid var(--border)', background: 'var(--nav-bg)', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px', height: 68, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32 }}>
-          {/* Logo */}
           <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', flexShrink: 0 }}>
             Em<span style={{ color: '#D4A017' }}>Maxi</span>
           </div>
 
-          {/* Desktop nav links — centred */}
           <div className="hidden md:flex" style={{ gap: 36, flex: 1, justifyContent: 'center' }}>
             {[['Features', '#features'], ['Courses', '#courses'], ['Reviews', '#reviews']].map(([label, href]) => (
               <a key={label} href={href} className="nav-link"
@@ -180,7 +248,6 @@ export function LandingPage() {
             ))}
           </div>
 
-          {/* Desktop CTA buttons */}
           <div className="hidden md:flex" style={{ gap: 10, alignItems: 'center', flexShrink: 0 }}>
             <ThemeToggle />
             <button onClick={() => navigate('/login')}
@@ -190,7 +257,7 @@ export function LandingPage() {
             >
               Sign in
             </button>
-            <button onClick={() => navigate('/signup/student')}
+            <button onClick={() => navigate('/signup')}
               style={{ fontSize: 14, fontWeight: 600, color: '#fff', background: '#D4A017', border: 'none', borderRadius: 8, cursor: 'pointer', padding: '10px 20px', whiteSpace: 'nowrap' }}>
               Get started
             </button>
@@ -208,7 +275,6 @@ export function LandingPage() {
           </div>
         </div>
 
-        {/* Mobile menu dropdown */}
         {menuOpen && (
           <div style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', padding: '16px 32px 20px', display: 'flex', flexDirection: 'column', gap: 12 }}>
             {[['Features', '#features'], ['Courses', '#courses'], ['Reviews', '#reviews']].map(([label, href]) => (
@@ -222,7 +288,7 @@ export function LandingPage() {
                 style={{ flex: 1, fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', background: 'none', border: '1.5px solid var(--border-2)', borderRadius: 8, cursor: 'pointer', padding: '10px' }}>
                 Sign in
               </button>
-              <button onClick={() => { navigate('/signup/student'); setMenuOpen(false) }}
+              <button onClick={() => { navigate('/signup'); setMenuOpen(false) }}
                 style={{ flex: 1, fontSize: 14, fontWeight: 600, color: '#fff', background: '#D4A017', border: 'none', borderRadius: 8, cursor: 'pointer', padding: '10px' }}>
                 Get started
               </button>
@@ -231,67 +297,158 @@ export function LandingPage() {
         )}
       </nav>
 
-      {/* Hero */}
-      <section style={{ background: 'var(--bg)', padding: '72px 24px 64px', textAlign: 'center' }}>
-        <div style={{ maxWidth: 680, margin: '0 auto' }}>
-          <h1 className="fade-up" style={{ fontSize: 'clamp(36px, 5vw, 56px)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.1, letterSpacing: '-0.025em', marginBottom: 20 }}>
+      {/* ── Hero ── */}
+      <section style={{ background: 'var(--bg)', padding: '72px 24px 0', textAlign: 'center' }}>
+        <div style={{ maxWidth: 720, margin: '0 auto' }}>
+          <h1 className="fade-up" style={{ fontSize: 'clamp(36px, 5vw, 58px)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.08, letterSpacing: '-0.03em', marginBottom: 20 }}>
             Here to help you grow
           </h1>
-          <p className="fade-up stagger-1" style={{ fontSize: 18, color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: 40 }}>
+          <p className="fade-up stagger-1" style={{ fontSize: 18, color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 44 }}>
             Whether you want to build new skills, earn a certificate, or launch your own course — EmMaxi gives you the tools to get there.
           </p>
 
-          {/* Tab switcher */}
-          <div className="fade-up stagger-2" style={{ display: 'inline-flex', background: 'var(--bg-tertiary)', borderRadius: 999, padding: 4, gap: 4, marginBottom: 36 }}>
-            <button className={`tab-btn${activeTab === 'learner' ? ' active' : ''}`}
-              onClick={() => handleTabSwitch('learner')}>
-              I want to learn
-            </button>
-            <button className={`tab-btn${activeTab === 'instructor' ? ' active' : ''}`}
-              onClick={() => handleTabSwitch('instructor')}>
-              I want to teach
-            </button>
-          </div>
-
-          {/* Signup CTA below tabs */}
-          <div className="fade-up stagger-3" style={{ marginBottom: 32 }}>
-            <button
-              onClick={() => navigate(activeTab === 'learner' ? '/signup/student' : '/signup/instructor')}
-              style={{ fontSize: 15, fontWeight: 600, color: '#fff', background: '#D4A017', border: 'none', borderRadius: 8, cursor: 'pointer', padding: '12px 32px' }}>
-              {activeTab === 'learner' ? 'Start learning for free' : 'Start teaching for free'}
-            </button>
-          </div>
-
-          {/* Category pills — top 5 from real course data */}
-          <div className="fade-up stagger-3" style={{ marginBottom: 8 }}>
-            <p style={{ fontSize: 13, color: 'var(--text-tertiary)', marginBottom: 12 }}>
-              {activeTab === 'learner' ? 'What do you want to learn?' : 'What will you teach?'}
-            </p>
-            <div className="pills-scroll" style={{ justifyContent: 'center' }}>
-              {activeTab === 'learner'
-                ? topCategories.map(({ category, students }) => (
-                  <button key={category}
-                    className={`goal-pill${activeCategory === category ? ' active' : ''}`}
-                    onClick={() => handleCategoryClick(category)}
-                    title={`${students.toLocaleString()} students`}>
-                    {category}
-                    <span style={{ marginLeft: 6, fontSize: 11, opacity: 0.7 }}>
-                      {students >= 1000 ? `${(students / 1000).toFixed(1)}k` : students}
-                    </span>
-                  </button>
-                ))
-                : ['Course Design', 'Pricing Strategy', 'Growing Students', 'Video Production', 'Marketing'].map(g => (
-                  <button key={g} className="goal-pill" onClick={() => navigate('/signup/instructor')}>{g}</button>
-                ))
-              }
+          {/* ── Classic segmented control ── */}
+          <div className="fade-up stagger-2" style={{ display: 'flex', justifyContent: 'center', marginBottom: 48 }}>
+            <div className="seg-control">
+              <button
+                id="tab-learner"
+                className={`seg-btn${activeTab === 'learner' ? ' active' : ''}`}
+                onClick={() => handleTabSwitch('learner')}
+              >
+                I want to learn
+              </button>
+              <button
+                id="tab-instructor"
+                className={`seg-btn${activeTab === 'instructor' ? ' active' : ''}`}
+                onClick={() => handleTabSwitch('instructor')}
+              >
+                I want to teach
+              </button>
             </div>
+          </div>
+
+          {/* ── Tab detail panel ── */}
+          <div key={activeTab} className="tab-detail-panel" style={{ textAlign: 'left', marginBottom: 64 }}>
+            {activeTab === 'learner' ? (
+              <>
+                {/* Section label */}
+                <p style={{ fontSize: 12, fontWeight: 700, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: 10, textAlign: 'center' }}>
+                  Browse by category
+                </p>
+
+                {/* Category cards linking to courses page */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 12, marginBottom: 36 }}>
+                  {COURSE_CATEGORIES.map(cat => (
+                    <button
+                      key={cat.label}
+                      className="cat-card"
+                      onClick={() => navigate(`/courses?category=${encodeURIComponent(cat.label)}`)}
+                    >
+                      <span className="cat-icon">{cat.icon}</span>
+                      <span className="cat-label">{cat.label}</span>
+                      <span className="cat-desc">{cat.desc}</span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* What you get as a learner */}
+                <div style={{ marginBottom: 36 }}>
+                  <p style={{ fontSize: 12, fontWeight: 700, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: 14, textAlign: 'center' }}>
+                    What you get
+                  </p>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 12 }}>
+                    {LEARNER_HIGHLIGHTS.map(h => (
+                      <div key={h.title} className="highlight-card">
+                        <span className="highlight-icon">{h.icon}</span>
+                        <div>
+                          <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{h.title}</div>
+                          <div style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.55 }}>{h.desc}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                  <button
+                    onClick={() => navigate('/signup')}
+                    style={{ fontSize: 15, fontWeight: 600, color: '#fff', background: '#D4A017', border: 'none', borderRadius: 8, cursor: 'pointer', padding: '13px 32px', boxShadow: '0 4px 16px rgba(212,160,23,.3)' }}>
+                    Create free account →
+                  </button>
+                  <button
+                    onClick={() => navigate('/courses')}
+                    style={{ fontSize: 15, fontWeight: 600, color: '#D4A017', background: 'var(--surface)', border: '1.5px solid var(--border-2)', borderRadius: 8, cursor: 'pointer', padding: '13px 28px' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#D4A017' }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-2)' }}
+                  >
+                    Explore courses
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* What you can teach */}
+                <p style={{ fontSize: 12, fontWeight: 700, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: 10, textAlign: 'center' }}>
+                  Topics you can teach
+                </p>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 12, marginBottom: 36 }}>
+                  {COURSE_CATEGORIES.map(cat => (
+                    <button
+                      key={cat.label}
+                      className="cat-card"
+                      onClick={() => navigate('/signup')}
+                    >
+                      <span className="cat-icon">{cat.icon}</span>
+                      <span className="cat-label">{cat.label}</span>
+                      <span className="cat-desc">{cat.desc}</span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Instructor perks */}
+                <div style={{ marginBottom: 36 }}>
+                  <p style={{ fontSize: 12, fontWeight: 700, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: 14, textAlign: 'center' }}>
+                    Why teach on EmMaxi
+                  </p>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 12 }}>
+                    {INSTRUCTOR_HIGHLIGHTS.map(h => (
+                      <div key={h.title} className="highlight-card">
+                        <span className="highlight-icon">{h.icon}</span>
+                        <div>
+                          <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{h.title}</div>
+                          <div style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.55 }}>{h.desc}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                  <button
+                    onClick={() => navigate('/signup')}
+                    style={{ fontSize: 15, fontWeight: 600, color: '#fff', background: '#D4A017', border: 'none', borderRadius: 8, cursor: 'pointer', padding: '13px 32px', boxShadow: '0 4px 16px rgba(212,160,23,.3)' }}>
+                    Start teaching for free →
+                  </button>
+                  <button
+                    onClick={() => navigate('/courses')}
+                    style={{ fontSize: 15, fontWeight: 600, color: '#D4A017', background: 'var(--surface)', border: '1.5px solid var(--border-2)', borderRadius: 8, cursor: 'pointer', padding: '13px 28px' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#D4A017' }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-2)' }}
+                  >
+                    See live courses
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
 
       <hr className="landing-divider" />
 
-      {/* Stats — computed live from course data */}
+      {/* ── Stats ── */}
       <section style={{ background: 'var(--bg-elevated)', padding: '48px 24px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 32 }}>
           {[
@@ -310,7 +467,7 @@ export function LandingPage() {
 
       <hr className="landing-divider" />
 
-      {/* Grow your career / Share your expertise */}
+      {/* ── Features / Courses ── */}
       <section id="features" style={{ padding: '64px 24px', maxWidth: 1200, margin: '0 auto' }}>
         <div id="courses" style={{ position: 'relative', top: -80 }} />
         <div className="fade-left" style={{ marginBottom: 40 }}>
@@ -322,15 +479,14 @@ export function LandingPage() {
           </h2>
           <p style={{ fontSize: 16, color: 'var(--text-secondary)', lineHeight: 1.65, maxWidth: 520 }}>
             {activeTab === 'learner'
-              ? `Browse ${publishedCourses.length} courses across ${topCategories.length} categories. Click any category above to jump straight to what interests you.`
+              ? `Browse ${DEMO_COURSES.filter(c => c.status === 'published').length} courses across ${COURSE_CATEGORIES.length} categories. Click any category in the hero to jump to what interests you.`
               : 'From your first course to a thriving student base, EmMaxi gives instructors the tools to build, publish, and earn.'}
           </p>
         </div>
 
         {activeTab === 'learner' ? (
-          /* Real course cards from DEMO_COURSES, filtered by selected category */
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 20 }}>
-            {filteredCourses.map((course, i) => (
+            {DEMO_COURSES.filter(c => c.status === 'published').slice(0, 3).map((course, i) => (
               <div key={course.id}
                 className={`course-card-g scale-in stagger-${Math.min(i + 1, 6)}`}
                 onClick={() => navigate(`/courses?category=${encodeURIComponent(course.category)}`)}>
@@ -352,11 +508,11 @@ export function LandingPage() {
             ))}
           </div>
         ) : (
-          /* Instructor tools — static */
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
             {INSTRUCTOR_TOOLS.map((item, i) => (
               <div key={item.title} className={`course-card-g scale-in stagger-${i + 1}`}
-                onClick={() => navigate('/signup/instructor')}>
+                onClick={() => navigate('/signup')}>
+                <div style={{ fontSize: 28, marginBottom: 4 }}>{item.icon}</div>
                 <div className="label">{item.label}</div>
                 <h3>{item.title}</h3>
                 <p>{item.desc}</p>
@@ -382,7 +538,7 @@ export function LandingPage() {
 
       <hr className="landing-divider" />
 
-      {/* Testimonials */}
+      {/* ── Testimonials ── */}
       <section id="reviews" style={{ padding: '64px 24px', maxWidth: 1200, margin: '0 auto' }}>
         <div className="fade-left" style={{ marginBottom: 40 }}>
           <p style={{ fontSize: 13, fontWeight: 600, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 10 }}>Success stories</p>
@@ -411,7 +567,7 @@ export function LandingPage() {
 
       <hr className="landing-divider" />
 
-      {/* CTA */}
+      {/* ── Bottom CTA ── */}
       <section style={{ background: 'var(--bg-elevated)', padding: '64px 24px', textAlign: 'center' }}>
         <div style={{ maxWidth: 600, margin: '0 auto' }}>
           <p className="fade-up" style={{ fontSize: 13, fontWeight: 600, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 16 }}>Get started today</p>
@@ -423,7 +579,7 @@ export function LandingPage() {
           </p>
           <div className="fade-up stagger-3" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <button onClick={() => navigate('/signup')}
-              style={{ fontSize: 15, fontWeight: 600, color: '#fff', background: '#D4A017', border: 'none', borderRadius: 8, cursor: 'pointer', padding: '14px 32px' }}>
+              style={{ fontSize: 15, fontWeight: 600, color: '#fff', background: '#D4A017', border: 'none', borderRadius: 8, cursor: 'pointer', padding: '14px 32px', boxShadow: '0 4px 16px rgba(212,160,23,.3)' }}>
               Create free account
             </button>
             <button onClick={() => navigate('/courses')}
@@ -437,7 +593,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* ── Footer ── */}
       <footer style={{ borderTop: '1px solid var(--border)', background: 'var(--bg)', padding: '32px 24px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
           <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>

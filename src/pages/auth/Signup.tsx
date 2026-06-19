@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { Btn, Divider } from '../../components/ui'
 import { ThemeToggle } from '../../components/ui/ThemeToggle'
@@ -38,8 +38,11 @@ const ROLE_INFO = {
 
 export function SignupPage() {
   const navigate = useNavigate()
+  const { role: roleParam } = useParams<{ role?: string }>()
   const { signup } = useAuth()
-  const [role, setRole] = useState<Role>('student')
+  const [role, setRole] = useState<Role>(
+    roleParam === 'instructor' ? 'instructor' : 'student'
+  )
   const [fname, setFname] = useState('')
   const [lname, setLname] = useState('')
   const [email, setEmail] = useState('')

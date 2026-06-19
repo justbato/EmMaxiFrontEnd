@@ -126,6 +126,30 @@
   transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
+/* ── Input text always visible ── */
+input, textarea, select {
+  color: var(--text-primary);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-tertiary);
+  opacity: 1;
+}
+
+/* Dark mode — boost placeholder + text contrast */
+.dark input,
+.dark textarea,
+.dark select {
+  color: var(--text-primary);
+  caret-color: var(--brand);
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #64748B;
+  opacity: 1;
+}
+
 html,
 body {
   font-family: 'Satoshi', sans-serif;
