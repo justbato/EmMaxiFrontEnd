@@ -152,46 +152,59 @@ export function LandingPage() {
           background: var(--bg-tertiary);
         }
 
-        /* ── Category cards ── */
-        .cat-card {
+        /* ── Category pill chips (horizontal row) ── */
+        .cat-chip-row {
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 6px;
-          padding: 16px 18px;
+          flex-wrap: wrap;
+          gap: 10px;
+          justify-content: center;
+        }
+        .cat-card {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 18px;
           border: 1.5px solid var(--border);
-          border-radius: 12px;
+          border-radius: 999px;
           background: var(--surface);
           cursor: pointer;
-          transition: border-color .2s, box-shadow .2s, transform .2s, background .2s;
+          transition: border-color .2s, box-shadow .2s, transform .15s, background .2s;
+          white-space: nowrap;
         }
         .cat-card:hover {
           border-color: #D4A017;
-          box-shadow: 0 4px 16px rgba(212,160,23,.14);
-          transform: translateY(-3px);
+          box-shadow: 0 4px 16px rgba(212,160,23,.18);
+          transform: translateY(-2px);
           background: var(--brand-light);
         }
-        .cat-icon { font-size: 22px; line-height: 1; }
+        .cat-icon { font-size: 18px; line-height: 1; flex-shrink: 0; }
         .cat-label { font-size: 13px; font-weight: 700; color: var(--text-primary); }
-        .cat-desc  { font-size: 11px; color: var(--text-tertiary); line-height: 1.4; }
+        .cat-desc  { font-size: 11px; color: var(--text-tertiary); margin-left: 2px; }
 
-        /* ── Highlight cards (what you get) ── */
+        /* ── Highlight cards (horizontal equal-width row) ── */
+        .highlight-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+        }
         .highlight-card {
+          flex: 1 1 200px;
           display: flex;
           align-items: flex-start;
-          gap: 14px;
-          padding: 20px 22px;
+          gap: 12px;
+          padding: 18px 20px;
           border: 1.5px solid var(--border);
           border-radius: 12px;
           background: var(--surface);
           transition: border-color .25s, box-shadow .25s, transform .25s, background .25s;
+          min-width: 0;
         }
         .highlight-card:hover {
           border-color: #D4A017;
           box-shadow: 0 6px 24px rgba(212,160,23,.12);
           transform: translateY(-3px);
         }
-        .highlight-icon { font-size: 26px; flex-shrink: 0; margin-top: 1px; }
+        .highlight-icon { font-size: 24px; flex-shrink: 0; margin-top: 1px; }
 
         /* ── Course card ── */
         .course-card-g { border: 1.5px solid var(--border); border-radius: 12px; padding: 28px; background: var(--surface); display: flex; flex-direction: column; gap: 10px; transition: box-shadow .25s ease, border-color .25s ease, transform .25s ease, background-color .25s ease; cursor: pointer; }
@@ -336,8 +349,8 @@ export function LandingPage() {
                   Browse by category
                 </p>
 
-                {/* Category cards linking to courses page */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 12, marginBottom: 36 }}>
+                {/* Category chips — full-width horizontal row */}
+                <div className="cat-chip-row" style={{ marginBottom: 36 }}>
                   {COURSE_CATEGORIES.map(cat => (
                     <button
                       key={cat.label}
@@ -346,21 +359,21 @@ export function LandingPage() {
                     >
                       <span className="cat-icon">{cat.icon}</span>
                       <span className="cat-label">{cat.label}</span>
-                      <span className="cat-desc">{cat.desc}</span>
+                      <span className="cat-desc" style={{ fontSize: 11, color: 'var(--text-tertiary)', marginLeft: 2 }}>— {cat.desc}</span>
                     </button>
                   ))}
                 </div>
 
-                {/* What you get as a learner */}
+                {/* What you get as a learner — equal-width horizontal row */}
                 <div style={{ marginBottom: 36 }}>
                   <p style={{ fontSize: 12, fontWeight: 700, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: 14, textAlign: 'center' }}>
                     What you get
                   </p>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 12 }}>
+                  <div className="highlight-row">
                     {LEARNER_HIGHLIGHTS.map(h => (
                       <div key={h.title} className="highlight-card">
                         <span className="highlight-icon">{h.icon}</span>
-                        <div>
+                        <div style={{ minWidth: 0 }}>
                           <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{h.title}</div>
                           <div style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.55 }}>{h.desc}</div>
                         </div>
@@ -392,7 +405,7 @@ export function LandingPage() {
                 <p style={{ fontSize: 12, fontWeight: 700, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: 10, textAlign: 'center' }}>
                   Topics you can teach
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 12, marginBottom: 36 }}>
+                <div className="cat-chip-row" style={{ marginBottom: 36 }}>
                   {COURSE_CATEGORIES.map(cat => (
                     <button
                       key={cat.label}
@@ -401,21 +414,21 @@ export function LandingPage() {
                     >
                       <span className="cat-icon">{cat.icon}</span>
                       <span className="cat-label">{cat.label}</span>
-                      <span className="cat-desc">{cat.desc}</span>
+                      <span className="cat-desc" style={{ fontSize: 11, color: 'var(--text-tertiary)', marginLeft: 2 }}>— {cat.desc}</span>
                     </button>
                   ))}
                 </div>
 
-                {/* Instructor perks */}
+                {/* Instructor perks — equal-width horizontal row */}
                 <div style={{ marginBottom: 36 }}>
                   <p style={{ fontSize: 12, fontWeight: 700, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: 14, textAlign: 'center' }}>
                     Why teach on EmMaxi
                   </p>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 12 }}>
+                  <div className="highlight-row">
                     {INSTRUCTOR_HIGHLIGHTS.map(h => (
                       <div key={h.title} className="highlight-card">
                         <span className="highlight-icon">{h.icon}</span>
-                        <div>
+                        <div style={{ minWidth: 0 }}>
                           <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{h.title}</div>
                           <div style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.55 }}>{h.desc}</div>
                         </div>
