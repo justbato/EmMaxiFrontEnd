@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { StarRating } from '../components/ui'
 import { DEMO_COURSES } from '../types'
-import { CourseCard } from '../components/CourseCard'
 
 type Tab = 'learner' | 'instructor'
 
@@ -51,16 +50,18 @@ export function LandingPage() {
   const navigate = useNavigate()
   const observerRef = useRef<IntersectionObserver | null>(null)
   const [activeTab, setActiveTab] = useState<Tab>('learner')
-
+  const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
   // Derived from real course data
   const topCategories = getTopCategories(DEMO_COURSES)
   const stats = getStats(DEMO_COURSES)
 
-  // Published courses — show top 3 by student count as a preview
+  // Published courses filtered by selected category
   const publishedCourses = DEMO_COURSES.filter(c => c.status === 'published')
-  const featuredCourses = [...publishedCourses].sort((a, b) => b.students - a.students).slice(0, 3)
+  const filteredCourses = activeCategory
+    ? publishedCourses.filter(c => c.category === activeCategory)
+    : publishedCourses.slice(0, 3)
 
   const connectObserver = () => {
     if (observerRef.current) observerRef.current.disconnect()
@@ -78,13 +79,16 @@ export function LandingPage() {
   useEffect(() => {
     connectObserver()
     return () => observerRef.current?.disconnect()
-  }, [activeTab])
+  }, [activeTab, activeCategory])
 
   const handleTabSwitch = (tab: Tab) => {
     setActiveTab(tab)
+    setActiveCategory(null)
   }
 
   const handleCategoryClick = (category: string) => {
+    setActiveCategory(prev => prev === category ? null : category)
+    // Navigate to courses page with category filter
     navigate(`/courses?category=${encodeURIComponent(category)}`)
   }
 
@@ -262,7 +266,7 @@ export function LandingPage() {
               {activeTab === 'learner'
                 ? topCategories.map(({ category, students }) => (
                   <button key={category}
-                    className="goal-pill"
+                    className={`goal-pill${activeCategory === category ? ' active' : ''}`}
                     onClick={() => handleCategoryClick(category)}
                     title={`${students.toLocaleString()} students`}>
                     {category}
@@ -303,6 +307,7 @@ export function LandingPage() {
 
       {/* Grow your career / Share your expertise */}
       <section id="features" style={{ padding: '64px 24px', maxWidth: 1200, margin: '0 auto' }}>
+        <div id="courses" style={{ position: 'relative', top: -80 }} />
         <div className="fade-left" style={{ marginBottom: 40 }}>
           <p style={{ fontSize: 13, fontWeight: 600, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 12 }}>
             {activeTab === 'learner' ? 'For learners' : 'For instructors'}
@@ -320,10 +325,10 @@ export function LandingPage() {
         {activeTab === 'learner' ? (
           /* Real course cards from DEMO_COURSES, filtered by selected category */
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 20 }}>
-            {featuredCourses.map((course, i) => (
+            {filteredCourses.map((course, i) => (
               <div key={course.id}
                 className={`course-card-g scale-in stagger-${Math.min(i + 1, 6)}`}
-                onClick={() => navigate(`/courses/${course.id}`)}>
+                onClick={() => navigate(`/courses?category=${encodeURIComponent(course.category)}`)}>
                 <div className="label">{course.category}</div>
                 <h3>{course.title}</h3>
                 <p>{course.description}</p>
@@ -367,32 +372,6 @@ export function LandingPage() {
           >
             Explore all {activeTab === 'learner' ? 'courses' : 'tools'}
           </button>
-        </div>
-      </section>
-
-      <hr className="divider" />
-
-      {/* Featured Courses from platform */}
-      <section id="courses" style={{ background: '#f8f9fa', padding: '64px 24px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div className="fade-up" style={{ marginBottom: 40, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-            <div>
-              <p style={{ fontSize: 13, fontWeight: 600, color: '#D4A017', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 10 }}>Live on platform</p>
-              <h2 style={{ fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 700, color: '#202124', letterSpacing: '-0.02em' }}>Featured courses</h2>
-              <p style={{ fontSize: 15, color: '#5f6368', marginTop: 8 }}>Hand-picked from our top instructors.</p>
-            </div>
-            <button onClick={() => navigate('/courses')}
-              style={{ fontSize: 14, fontWeight: 600, color: '#D4A017', background: 'none', border: '1.5px solid #dadce0', borderRadius: 8, cursor: 'pointer', padding: '10px 20px' }}>
-              Browse all courses
-            </button>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 20 }}>
-            {DEMO_COURSES.filter(c => c.status === 'published').slice(0, 3).map((c, i) => (
-              <div key={c.id} className={`scale-in stagger-${i + 1}`}>
-                <CourseCard course={c} />
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
